@@ -4,6 +4,7 @@ import spark.*;
 import spark.template.velocity.*;
 import java.util.*;
 import static spark.Spark.*;
+import java.sql.*;
 
 /**
  * This class contains exactly the same functionality as TodoList,
@@ -11,17 +12,28 @@ import static spark.Spark.*;
  */
 public class Ubay {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
-        exception(Exception.class, (e, req, res) -> e.printStackTrace()); // print all exceptions
-        staticFiles.location("/public");
-        port(9999);
+        //Connect to DB
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/uBay", "root", "1234");
 
-        // Render main UI
-        get("/", (req, res) -> renderTodos(req));
+        //Execute Query
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT first_name, last_name FROM account");
 
+        //Get Query Results
+        while (rs.next()) {
+            //Retrieve by column name
+            String FN = rs.getString("first_name");
+            String LN = rs.getString("last_name");
+
+            //Display values
+            System.out.println(", First: " + FN);
+            System.out.println(", Last: " + LN);
+            System.out.println();
+        }
     }
-
+/*
     private static String renderTodos(Request req) {
         String statusStr = req.queryParams("status");
         Map<String, Object> model = new HashMap<>();
@@ -40,5 +52,6 @@ public class Ubay {
     private static String renderTemplate(String template, Map model) {
         return new VelocityTemplateEngine().render(new ModelAndView(model, template));
     }
+    */
 
 }
