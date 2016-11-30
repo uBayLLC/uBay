@@ -11,6 +11,6 @@ public class Account {
     @NonNull private String email;
     @NonNull private String password;
     @NonNull private String address;
-    private int card = 0;
+    private int card = 100;
 
 }
