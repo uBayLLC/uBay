@@ -1,4 +1,5 @@
-import model.*;
+import model.Status;
+import model.TodoDao;
 import spark.*;
 import spark.template.velocity.*;
 import java.util.*;
@@ -8,7 +9,7 @@ import static spark.Spark.*;
  * This class contains exactly the same functionality as TodoList,
  * but it's following normal Spark conventions more closely.
  */
-public class BasicTodoList {
+public class Ubay {
 
     public static void main(String[] args) {
 
@@ -19,49 +20,6 @@ public class BasicTodoList {
         // Render main UI
         get("/", (req, res) -> renderTodos(req));
 
-        // Add new
-        post("/todos", (req, res) -> {
-            TodoDao.add(Todo.create(req.queryParams("todo-title")));
-            return renderTodos(req);
-        });
-
-        // Remove all completed
-        delete("/todos/completed", (req, res) -> {
-            TodoDao.removeCompleted();
-            return renderTodos(req);
-        });
-
-        // Toggle all status
-        put("/todos/toggle_status", (req, res) -> {
-            TodoDao.toggleAll(req.queryParams("toggle-all") != null);
-            return renderTodos(req);
-        });
-
-        // Remove by id
-        delete("/todos/:id", (req, res) -> {
-            TodoDao.remove(req.params("id"));
-            return renderTodos(req);
-        });
-
-        // Update by id
-        put("/todos/:id", (req, res) -> {
-            TodoDao.update(req.params("id"), req.queryParams("todo-title"));
-            return renderTodos(req);
-        });
-
-        // Toggle status by id
-        put("/todos/:id/toggle_status", (req, res) -> {
-            TodoDao.toggleStatus(req.params("id"));
-            return renderTodos(req);
-        });
-
-        // Edit by id
-        get("/todos/:id/edit", (req, res) -> renderEditTodo(req));
-
-    }
-
-    private static String renderEditTodo(Request req) {
-        return renderTemplate("velocity/editTodo.vm", new HashMap(){{ put("todo", TodoDao.find(req.params("id"))); }});
     }
 
     private static String renderTodos(Request req) {
