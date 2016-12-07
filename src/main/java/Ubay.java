@@ -5,13 +5,9 @@ import spark.template.velocity.*;
 import java.util.*;
 import static spark.Spark.*;
 
-/**
- * This class contains exactly the same functionality as TodoList,
- * but it's following normal Spark conventions more closely.
- */
 public class Ubay {
 
-    public static void main(String[] args) {
+    public static void main(String [] args) {
 
         exception(Exception.class, (e, req, res) -> e.printStackTrace()); // print all exceptions
         staticFiles.location("/public");
@@ -19,26 +15,30 @@ public class Ubay {
 
         // Render main UI
         get("/", (req, res) -> renderGUI(req));
-        get("/login", (req, res) -> renderLogin(req));
+        get("/login", (req, res) -> renderLoginTemplate(req));
+        put("/login2", (req, res) -> parseLogin(req)); }
 
-    }
+
+    private static String parseLogin(Request req) {
+
+        String email = req.queryParams("email");
+        String password = req.queryParams("password");
+
+        System.out.println(email);
+        System.out.print(password);
+
+    return renderTemplate("velocity/home.vm", new HashMap()); }
 
     private static String renderGUI(Request req) {
         String statusStr = req.queryParams("status");
         Map<String, Object> model = new HashMap<>();
-        model.put("todos", TodoDao.ofStatus(statusStr));
-        model.put("filter", Optional.ofNullable(statusStr).orElse(""));
-        model.put("activeCount", TodoDao.ofStatus(Status.ACTIVE).size());
-        model.put("anyCompleteTodos", TodoDao.ofStatus(Status.COMPLETE).size() > 0);
-        model.put("allComplete", TodoDao.all().size() == TodoDao.ofStatus(Status.COMPLETE).size());
-        model.put("status", Optional.ofNullable(statusStr).orElse(""));
         if ("true".equals(req.queryParams("ic-request"))) {
             return renderTemplate("velocity/todoList.vm", model);
         }
         return renderTemplate("velocity/index.vm", model);
     }
 
-    private static String renderLogin(Request req) {
+    private static String renderLoginTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
         return renderTemplate("velocity/login.vm", model);
     }
