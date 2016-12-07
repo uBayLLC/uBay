@@ -67,7 +67,7 @@ CREATE TABLE receipt (
 INSERT INTO account VALUES
 	(NULL, 'miyagi@email.com', 'pw', 'Kesuke', 'Miyagi', 'Korea', '999999999'),
 	(NULL, 'trump@email.com', 'pw', 'Donald', 'Trump', 'Murica', '123123123'),
-	(NULL, 'hillary@email.com, 'pw',''Hillary', 'Fucking Lost', 'Murica', '321321321'),
+	(NULL, 'hillary@email.com', 'pw','Hillary', 'Fucking Lost', 'Murica', '321321321'),
 	(NULL, 'johnson@email.com', 'pw','Dwayne', 'Johnson', 'Murica', '456456456'),
 	(NULL, 'harambe@email.com', 'pw', 'Harambe', 'Harambe', 'Heaven', '111111111');
 	
