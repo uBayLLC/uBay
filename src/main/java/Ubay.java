@@ -1,7 +1,10 @@
-import model.Status;
-import model.TodoDao;
+//import com.mysql.*;
+//import model.Status;
+//import model.TodoDao;
 import spark.*;
 import spark.template.velocity.*;
+
+import java.sql.*;
 import java.util.*;
 import static spark.Spark.*;
 
@@ -45,8 +48,10 @@ public class Ubay {
 
     public static void main(String [] args) {
 
+        try {
         //Connect to DB
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/uBay", "root", "1234");
+
 
         exception(Exception.class, (e, req, res) -> e.printStackTrace()); // print all exceptions
         staticFiles.location("/public");
@@ -55,16 +60,27 @@ public class Ubay {
         // Render main UI
         get("/", (req, res) -> renderGUI(req));
         get("/login", (req, res) -> renderLoginTemplate(req));
-        put("/login2", (req, res) -> parseLogin(req)); }
+        put("/login2", (req, res) -> parseLogin(req, con));
+
+        } catch (SQLException exc) {
+        System.out.println("Error"); } }
 
 
-    private static String parseLogin(Request req) {
+    private static String parseLogin(Request req, Connection con) {
 
         String email = req.queryParams("email");
         String password = req.queryParams("password");
+        
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT first_name, card FROM account WHERE first_name = '"+email+"'");
+            rs.next();
+            String cnum = rs.getString("card");
+            System.out.println(cnum);
+        } catch (SQLException exc){
+            System.out.println("Name not found"); }
 
-        System.out.println(email);
-        System.out.print(password);
+
 
     return renderTemplate("velocity/home.vm", new HashMap()); }
 
