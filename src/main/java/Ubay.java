@@ -5,9 +5,48 @@ import spark.template.velocity.*;
 import java.util.*;
 import static spark.Spark.*;
 
+
+/*
+        //Connect to DB
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/uBay", "root", "1234");
+
+        //Execute Query
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT first_name, last_name FROM account");
+
+        //Get Query Results
+        while (rs.next()) {
+            //Retrieve by column name
+            String FN = rs.getString("first_name");
+            String LN = rs.getString("last_name");
+
+            //Display values
+            System.out.println(", First: " + FN);
+            System.out.println(", Last: " + LN);
+            System.out.println();
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public class Ubay {
 
     public static void main(String [] args) {
+
+        //Connect to DB
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/uBay", "root", "1234");
 
         exception(Exception.class, (e, req, res) -> e.printStackTrace()); // print all exceptions
         staticFiles.location("/public");
