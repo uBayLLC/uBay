@@ -1,48 +1,9 @@
-//import com.mysql.*;
-//import model.Status;
-//import model.TodoDao;
 import spark.*;
 import spark.template.velocity.*;
 
 import java.sql.*;
 import java.util.*;
 import static spark.Spark.*;
-
-
-/*
-        //Connect to DB
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/uBay", "root", "1234");
-
-        //Execute Query
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT first_name, last_name FROM account");
-
-        //Get Query Results
-        while (rs.next()) {
-            //Retrieve by column name
-            String FN = rs.getString("first_name");
-            String LN = rs.getString("last_name");
-
-            //Display values
-            System.out.println(", First: " + FN);
-            System.out.println(", Last: " + LN);
-            System.out.println();
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 public class Ubay {
 
@@ -51,7 +12,6 @@ public class Ubay {
         try {
         //Connect to DB
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/uBay", "root", "1234");
-
 
         exception(Exception.class, (e, req, res) -> e.printStackTrace()); // print all exceptions
         staticFiles.location("/public");
@@ -63,14 +23,14 @@ public class Ubay {
         put("/login2", (req, res) -> parseLogin(req, con));
 
         } catch (SQLException exc) {
-        System.out.println("Error"); } }
+        System.out.println("Couldn't Connect To DB"); } }
 
 
     private static String parseLogin(Request req, Connection con) {
 
         String email = req.queryParams("email");
         String password = req.queryParams("password");
-        
+
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT first_name, card FROM account WHERE first_name = '"+email+"'");
@@ -79,9 +39,7 @@ public class Ubay {
             System.out.println(cnum);
         } catch (SQLException exc){
             System.out.println("Name not found"); }
-
-
-
+        
     return renderTemplate("velocity/home.vm", new HashMap()); }
 
     private static String renderGUI(Request req) {
