@@ -22,9 +22,14 @@ public class Ubay {
             get("/", (req, res) -> renderGUI(req));
             get("/login", (req, res) -> renderLoginTemplate(req));
             put("/login2", (req, res) -> parseLogin(req));
+            put("/createAccount", (req, res) -> parseLogin(req));
+            get("/", (req, res) -> {
+                return renderTemplate("velocity/createAccount.vm", new HashMap());
+            });
 
         } catch (SQLException exc) {
-            System.out.println("Couldn't Connect To DB"); } }
+            System.out.println("Couldn't Connect To DB"); }
+    }
 
 
     private static String parseLogin(Request req) {
