@@ -18,11 +18,12 @@ public class Ubay {
         port(9999);
 
         // Render main UI
-        get("/", (req, res) -> renderTodos(req));
+        get("/", (req, res) -> renderGUI(req));
+        get("/login", (req, res) -> renderLogin(req));
 
     }
 
-    private static String renderTodos(Request req) {
+    private static String renderGUI(Request req) {
         String statusStr = req.queryParams("status");
         Map<String, Object> model = new HashMap<>();
         model.put("todos", TodoDao.ofStatus(statusStr));
@@ -34,7 +35,12 @@ public class Ubay {
         if ("true".equals(req.queryParams("ic-request"))) {
             return renderTemplate("velocity/todoList.vm", model);
         }
-        return renderTemplate("velocity/index2.vm", model);
+        return renderTemplate("velocity/index.vm", model);
+    }
+
+    private static String renderLogin(Request req) {
+        Map<String, Object> model = new HashMap<>();
+        return renderTemplate("velocity/login.vm", model);
     }
 
     private static String renderTemplate(String template, Map model) {
