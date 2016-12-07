@@ -33,13 +33,13 @@ public class Ubay {
 
         try {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT first_name, card FROM account WHERE first_name = '"+email+"'");
+            ResultSet rs = stmt.executeQuery("SELECT card FROM account WHERE email = '"+email+"'" +" AND "+ "password = '"+password+"'");
             rs.next();
             String cnum = rs.getString("card");
             System.out.println(cnum);
         } catch (SQLException exc){
-            System.out.println("Name not found"); }
-        
+            System.out.println("Invalid Login"); }
+
     return renderTemplate("velocity/home.vm", new HashMap()); }
 
     private static String renderGUI(Request req) {
