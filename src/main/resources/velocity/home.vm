@@ -1,5 +1,4 @@
 <header ic-include='{"status":"$status"}'>
-    <h1>todos</h1>
     <form id="todo-form" ic-post-to="/todos">
         <input id="new-todo" placeholder="What needs to be done?" name="todo-title" pattern=".{4,}" required title="> 3 chars" autofocus>
     </form>
