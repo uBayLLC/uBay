@@ -9,6 +9,8 @@ DROP TABLE account;
 -- Create Statements
 CREATE TABLE account (
     id INT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(253) NOT NULL,
+    password VARCHAR(50) NOT NULL,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     address VARCHAR(60) NOT NULL,
