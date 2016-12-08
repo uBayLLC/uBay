@@ -6,7 +6,7 @@
 ## Notes
 
 - These files are core to the application:
-  - Ubay.class
+  - ubay.application.Ubay.class
   - Account.class
   - home.vm
   - index.vm
