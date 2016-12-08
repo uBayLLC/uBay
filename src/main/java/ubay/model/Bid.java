@@ -1,6 +1,7 @@
-package model;
+package ubay.model;
 
 import lombok.*;
+import ubay.model.Account;
 
 @Data
 @RequiredArgsConstructor

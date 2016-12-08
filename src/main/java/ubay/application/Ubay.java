@@ -1,5 +1,8 @@
+package ubay.application;
+
 import spark.*;
 import spark.template.velocity.*;
+import ubay.route.LoginRoute;
 
 import java.sql.*;
 import java.util.*;
@@ -11,23 +14,24 @@ public class Ubay {
 
     public static void main(String [] args) {
 
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/uBay", "root", "1234");
+//        try {
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/uBay", "root", "1234");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
-            exception(Exception.class, (e, req, res) -> e.printStackTrace()); // print all exceptions
-            staticFiles.location("/public");
-            port(9999);
+        exception(Exception.class, (e, req, res) -> e.printStackTrace()); // print all exceptions
+        staticFiles.location("/public");
+        port(9999);
 
-            // Render main UI
-            get("/", (req, res) -> renderGUI(req));
-            get("/login", (req, res) -> renderLoginTemplate(req));
-            put("/login2", (req, res) -> parseLogin(req));
+        // Render main UI
+        get("/", (req, res) -> renderGUI(req));
 
-        } catch (SQLException exc) {
-            System.out.println("Couldn't Connect To DB"); } }
+        initializeRoutes();
 
+    }
 
-    private static String parseLogin(Request req) {
+    public static String parseLogin(Request req) {
 
         String email = req.queryParams("email");
         String password = req.queryParams("password");
@@ -43,7 +47,7 @@ public class Ubay {
 
         return renderTemplate("velocity/home.vm", new HashMap()); }
 
-    private static String renderGUI(Request req) {
+    public static String renderGUI(Request req) {
         String statusStr = req.queryParams("status");
         Map<String, Object> model = new HashMap<>();
         if ("true".equals(req.queryParams("ic-request"))) {
@@ -52,13 +56,16 @@ public class Ubay {
         return renderTemplate("velocity/index.vm", model);
     }
 
-    private static String renderLoginTemplate(Request req) {
+    public static String renderLoginTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
         return renderTemplate("velocity/login.vm", model);
     }
 
-    private static String renderTemplate(String template, Map model) {
+    public static String renderTemplate(String template, Map model) {
         return new VelocityTemplateEngine().render(new ModelAndView(model, template));
     }
 
+    private static void initializeRoutes() {
+        new LoginRoute();
+    }
 }
