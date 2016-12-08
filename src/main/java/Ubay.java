@@ -78,7 +78,7 @@ public class Ubay {
 
     private static String renderCreatAccountTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
-        return renderTemplate("velocity/CreateAccount.vm", model);
+        return renderTemplate("velocity/createAccount.vm", model);
     }
 
     private static String renderTemplate(String template, Map model) {
