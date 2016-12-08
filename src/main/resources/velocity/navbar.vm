@@ -1,5 +1,6 @@
 <nav class="navbar navbar-default container">
     <div class="collapse navbar-collapse">
+
         <form class="navbar-form navbar-left">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search">
@@ -9,11 +10,9 @@
 
         <form class="navbar-form navbar-right">
             <button ic-target="#login" ic-get-from="/login" class="btn btn-default">Log In</button>
-        </form>
-
-        <form class="navbar-form navbar-right">
             <button ic-target="#createAccount" ic-get-from="/createAccount" class="btn btn-default">Create Account</button>
         </form>
+
     </div>
 </nav>
 

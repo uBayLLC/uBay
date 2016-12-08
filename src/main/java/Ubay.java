@@ -21,16 +21,30 @@ public class Ubay {
             // Render main UI
             get("/", (req, res) -> renderGUI(req));
             get("/login", (req, res) -> renderLoginTemplate(req));
+            get("/createAccount", (req, res) -> renderCreatAccountTemplate(req));
             put("/login2", (req, res) -> parseLogin(req));
-            put("/createAccount", (req, res) -> parseLogin(req));
-            get("/", (req, res) -> {
-                return renderTemplate("velocity/createAccount.vm", new HashMap());
-            });
+            put("/createAccount2", (req, res) -> parseCreateAccount(req));
 
         } catch (SQLException exc) {
             System.out.println("Couldn't Connect To DB"); }
     }
 
+    private static String parseCreateAccount(Request req) {
+
+        String email = req.queryParams("email");
+        String password = req.queryParams("password");
+        String firstName = req.queryParams("firstname");
+        String lastName = req.queryParams("lastname");
+        String address = req.queryParams("address");
+        String cardNumber = req.queryParams("cardnumber");
+
+        try {
+            Statement stmt = con.createStatement();
+            //stmt.executeQuery("INSERT INTO account VALUES (NULL, '"+email+"', '"+password+"', '"+lastName+"', '"+firstName+"', '"+address+"', '"+cardNumber+"'");
+        } catch (SQLException exc) {
+            System.out.println("Invalid Login"); }
+
+        return renderTemplate("velocity/home.vm", new HashMap()); }
 
     private static String parseLogin(Request req) {
 
@@ -60,6 +74,11 @@ public class Ubay {
     private static String renderLoginTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
         return renderTemplate("velocity/login.vm", model);
+    }
+
+    private static String renderCreatAccountTemplate(Request req) {
+        Map<String, Object> model = new HashMap<>();
+        return renderTemplate("velocity/CreateAccount.vm", model);
     }
 
     private static String renderTemplate(String template, Map model) {
