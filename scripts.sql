@@ -9,6 +9,8 @@ DROP TABLE account;
 -- Create Statements
 CREATE TABLE account (
     id INT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(253) NOT NULL,
+    password VARCHAR(50) NOT NULL,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     address VARCHAR(60) NOT NULL,
@@ -63,11 +65,11 @@ CREATE TABLE receipt (
 
 -- Insert test data
 INSERT INTO account VALUES
-	(NULL, 'Kesuke', 'Miyagi', 'Korea', '999999999'),
-	(NULL, 'Donald', 'Trump', 'Murica', '123123123'),
-	(NULL, 'Hillary', 'Fucking Lost', 'Murica', '321321321'),
-	(NULL, 'Dwayne', 'Johnson', 'Murica', '456456456'),
-	(NULL, 'Harambe', 'Harambe', 'Heaven', '111111111');
+	(NULL, 'miyagi@email.com', 'pw', 'Kesuke', 'Miyagi', 'Korea', '999999999'),
+	(NULL, 'trump@email.com', 'pw', 'Donald', 'Trump', 'Murica', '123123123'),
+	(NULL, 'hillary@email.com', 'pw','Hillary', 'Fucking Lost', 'Murica', '321321321'),
+	(NULL, 'johnson@email.com', 'pw','Dwayne', 'Johnson', 'Murica', '456456456'),
+	(NULL, 'harambe@email.com', 'pw', 'Harambe', 'Harambe', 'Heaven', '111111111');
 	
 INSERT INTO bid VALUES
 	(NULL, '2', '25000'),
