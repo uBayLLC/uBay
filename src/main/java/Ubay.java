@@ -44,7 +44,7 @@ public class Ubay {
             System.out.println("Suscess");
         } catch (SQLException exc) {
             System.out.println("Couldn't Create Account"); }
-
+        
         return renderTemplate("velocity/home.vm", new HashMap()); }
 
     private static String parseLogin(Request req) {
@@ -54,10 +54,10 @@ public class Ubay {
 
         try {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT card FROM account WHERE email = '"+email+"'" +" AND "+ "password = '"+password+"'");
+            ResultSet rs = stmt.executeQuery("SELECT address FROM account WHERE email = '"+email+"'" +" AND "+ "password = '"+password+"'");
             rs.next();
-            String cnum = rs.getString("card");
-            System.out.println(cnum);
+            String address = rs.getString("address");
+            System.out.println(address);
         } catch (SQLException exc) {
             System.out.println("Invalid Login"); }
 
