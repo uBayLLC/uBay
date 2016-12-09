@@ -44,7 +44,7 @@ public class Ubay {
             System.out.println("Suscess");
         } catch (SQLException exc) {
             System.out.println("Couldn't Create Account"); }
-        
+
         return renderTemplate("velocity/home.vm", new HashMap()); }
 
     private static String parseLogin(Request req) {
