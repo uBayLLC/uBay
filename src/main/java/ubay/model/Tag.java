@@ -1,4 +1,4 @@
-package model;
+package ubay.model;
 
 import lombok.*;
 

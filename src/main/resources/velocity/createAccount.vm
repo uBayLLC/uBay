@@ -1,4 +1,4 @@
-<form ic-put-to="/createAccount2">
+<form ic-put-to="/create-account-data">
 
     <div class="form-group">
         <label for="Email">Email Address</label>
