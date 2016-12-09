@@ -40,9 +40,10 @@ public class Ubay {
 
         try {
             Statement stmt = con.createStatement();
-            //stmt.executeQuery("INSERT INTO account VALUES (NULL, '"+email+"', '"+password+"', '"+lastName+"', '"+firstName+"', '"+address+"', '"+cardNumber+"'");
+            stmt.execute("INSERT INTO account VALUES (NULL, '"+email+"', '"+password+"', '"+firstName+"', '"+lastName+"', '"+address+"', '"+cardNumber+"')");
+            System.out.println("Suscess");
         } catch (SQLException exc) {
-            System.out.println("Invalid Login"); }
+            System.out.println("Couldn't Create Account"); }
 
         return renderTemplate("velocity/home.vm", new HashMap()); }
 
