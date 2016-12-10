@@ -1,8 +1,5 @@
 package ubay.route;
 
-import spark.Request;
-
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +8,9 @@ import java.util.Map;
 
 import static spark.Spark.get;
 import static spark.Spark.put;
+import spark.Request;
+import spark.Response;
+import static spark.Spark.redirect;
 import static ubay.application.Ubay.*;
 
 public class LoginRoute extends TemplateRenderer {
