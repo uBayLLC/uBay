@@ -10,6 +10,7 @@ import static spark.Spark.get;
 import static spark.Spark.put;
 import spark.Request;
 import spark.Response;
+import spark.Route;
 import static spark.Spark.redirect;
 import static ubay.application.Ubay.*;
 
@@ -17,7 +18,7 @@ public class LoginRoute extends TemplateRenderer {
 
     public LoginRoute() {
         get("/login-template", (req, res) -> renderLoginTemplate(req));
-        put("/login-data", (req, res) -> parseLoginData(req));
+        put("/login-data", (req, res) -> parseLoginData(req, res));
     }
 
     private String renderLoginTemplate(Request req) {
@@ -25,10 +26,13 @@ public class LoginRoute extends TemplateRenderer {
         return renderTemplate("velocity/login.vm", model);
     }
 
-    private String parseLoginData(Request req) {
+    private String parseLoginData(Request req, Response res) {
 
         String email = req.queryParams("email");
         String password = req.queryParams("password");
+
+        String outcome = "";
+        //outcome = renderTemplate("velocity/home.vm", new HashMap());
 
         try {
             Statement stmt = con.createStatement();
@@ -36,11 +40,14 @@ public class LoginRoute extends TemplateRenderer {
             rs.next();
             String cnum = rs.getString("card");
             System.out.println(cnum);
+            //res.responseText();
+            outcome = renderTemplate("velocity/home.vm", new HashMap());
         } catch (SQLException exc) {
             System.out.println("Invalid Login");
+            outcome = renderTemplate("velocity/navbar.vm", new HashMap());
         }
 
-        return renderTemplate("velocity/home.vm", new HashMap());
+        return outcome;
     }
 
 }
