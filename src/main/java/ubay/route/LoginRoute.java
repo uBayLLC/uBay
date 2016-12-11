@@ -12,6 +12,7 @@ import java.util.Map;
 import static spark.Spark.get;
 import static spark.Spark.put;
 import static ubay.application.Ubay.*;
+import static ubay.database.DatabaseConnection.con;
 
 public class LoginRoute extends TemplateRenderer {
 

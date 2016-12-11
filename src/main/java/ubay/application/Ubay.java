@@ -1,14 +1,15 @@
 package ubay.application;
 
+import ubay.database.DatabaseConnection;
 import ubay.route.*;
-import java.sql.*;
+
 import static spark.Spark.*;
 
 public class Ubay {
 
     public static void main(String [] args) {
 
-        connectDatabase();
+        new DatabaseConnection();
 
         exception(Exception.class, (e, req, res) -> e.printStackTrace()); // print all exceptions
         staticFiles.location("/public");
@@ -18,19 +19,9 @@ public class Ubay {
 
     }
 
-    public static Connection con;
-
     private static void initializeRoutes() {
         new IndexRoute();
         new CreateAccountRoute();
         new LoginRoute();
-    }
-
-    private static void connectDatabase() {
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/uBay", "root", "1234");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
