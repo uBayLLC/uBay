@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-#parse("/velocity/navbar.vm")
+<section id="navbar1">
+    #parse("/velocity/navbar.vm")
+</section>
 <section id="todoapp" ic-target="this">
 ##    #parse("/velocity/home.vm")
 </section>
