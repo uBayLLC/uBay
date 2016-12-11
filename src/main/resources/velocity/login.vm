@@ -1,4 +1,4 @@
-<form ic-put-to="/login-data">
+<form ic-post-to="/login/data">
     <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
@@ -7,5 +7,5 @@
         <label for="exampleInputPassword1">Password</label>
         <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
     </div>
-    <button class="btn btn-default">Submit</button>
+    <button ic-target="#navbar1" class="btn btn-default">Submit</button>
 </form>

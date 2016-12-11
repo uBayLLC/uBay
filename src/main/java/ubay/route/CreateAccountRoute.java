@@ -2,7 +2,6 @@ package ubay.route;
 
 import spark.Request;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -10,13 +9,13 @@ import java.util.Map;
 
 import static spark.Spark.get;
 import static spark.Spark.put;
-import static ubay.application.Ubay.*;
+import static ubay.database.DatabaseConnection.con;
 
 public class CreateAccountRoute extends TemplateRenderer {
 
     public CreateAccountRoute() {
-        get("/create-account-template", (req, res) -> renderCreateAccountTemplate(req));
-        put("/create-account-data", (req, res) -> parseCreateAccountData(req));
+        get("/account/create/template", (req, res) -> renderCreateAccountTemplate(req));
+        put("/account/data", (req, res) -> parseCreateAccountData(req));
     }
 
     private static String renderCreateAccountTemplate(Request req) {
