@@ -32,7 +32,7 @@ public class LoginRoute extends TemplateRenderer {
 
         try {
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT card FROM account WHERE email = '"+email+"'" +" AND "+ "password = '"+password+"'");
+            ResultSet rs = stmt.executeQuery("SELECT card FROM account WHERE email = '" + email + "'" + " AND " + "password = '" + password + "'");
             rs.next();
             String cnum = rs.getString("card");
             System.out.println(cnum);
