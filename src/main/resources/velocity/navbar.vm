@@ -8,6 +8,7 @@
         </form>
         <form class="navbar-form navbar-right">
             <button ic-target="#login-form" ic-get-from="/login-template" class="btn btn-default">Log In</button>
+            <button ic-target="#createItem-form" ic-get-from="/createItem-template" class="btn btn-default">Create Item</button>
         </form>
     </div>
 </nav>
