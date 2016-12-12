@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
+
 import spark.Request;
 import static spark.Spark.post;
 import static ubay.database.DatabaseConnection.con;
@@ -19,6 +20,9 @@ public class LoginRoute extends TemplateRenderer {
 
     private String renderLoginTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
+
+        model.put("var", "hello");
+        
         return renderTemplate("velocity/login.vm", model);
     }
 
@@ -27,10 +31,6 @@ public class LoginRoute extends TemplateRenderer {
 
         String email = req.queryParams("email");
         String password = req.queryParams("password");
-        System.out.println(email);
-
-        String outcome = "";
-        //outcome = renderTemplate("velocity/home.vm", new HashMap());
 
         try {
             Statement stmt = con.createStatement();
@@ -38,15 +38,12 @@ public class LoginRoute extends TemplateRenderer {
             rs.next();
             String cnum = rs.getString("card");
             System.out.println(cnum);
-            //res.responseText();
-            outcome = renderTemplate("velocity/home.vm", new HashMap());
         } catch (SQLException exc) {
             exc.printStackTrace();
             System.out.println("Invalid Login");
-            outcome = renderTemplate("velocity/navbar.vm", new HashMap());
         }
 
-        return renderTemplate("velocity/navbar.vm", model);
+        return renderTemplate("velocity/home.vm", model);
     }
 
 }
