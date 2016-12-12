@@ -14,15 +14,15 @@ import static ubay.database.DatabaseConnection.con;
 
 public class LoginRoute extends TemplateRenderer {
 
+    String outcome;
+
     public LoginRoute() {
         get("/login/template", (req, res) -> renderLoginTemplate(req));
         post("/login/data", (req, res) -> parseLoginData(req));}
 
     private String renderLoginTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
-
-        model.put("var", "hello");
-        
+        model.put("var", "");
         return renderTemplate("velocity/login.vm", model);
     }
 
@@ -38,12 +38,16 @@ public class LoginRoute extends TemplateRenderer {
             rs.next();
             String cnum = rs.getString("card");
             System.out.println(cnum);
+            outcome = renderTemplate("velocity/home.vm", model);
+
         } catch (SQLException exc) {
             exc.printStackTrace();
             System.out.println("Invalid Login");
+            model.put("var", "Invalid Login");
+            outcome = renderTemplate("velocity/login.vm", model);
         }
 
-        return renderTemplate("velocity/home.vm", model);
+        return outcome;
     }
 
 }
