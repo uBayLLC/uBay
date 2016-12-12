@@ -12,6 +12,10 @@
 <section id="navbar1">
     #parse("/velocity/navbar.vm")
 </section>
+
+<button ic-target="#test" ic-get-from="/item/create-template">Create Item</button>
+<div id="test"></div>
+
 <section id="todoapp" ic-target="this">
 ##    #parse("/velocity/home.vm")
 </section>
