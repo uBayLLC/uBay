@@ -1,14 +1,15 @@
 package ubay.route;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
 import static spark.Spark.get;
 
 import spark.Request;
+
 import static spark.Spark.post;
 import static ubay.database.DatabaseConnection.con;
 
@@ -33,16 +34,14 @@ public class LoginRoute extends TemplateRenderer {
         String password = req.queryParams("password");
 
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT card FROM account WHERE email = '" + email + "'" + " AND " + "password = '" + password + "'");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM account WHERE email = '" + email + "'" + " AND " + "password = '" + password + "'");
+            ResultSet rs = stmt.executeQuery();
             rs.next();
-            String cnum = rs.getString("card");
-            System.out.println(cnum);
+            rs.getString("card");
             outcome = renderTemplate("velocity/home.vm", model);
 
         } catch (SQLException exc) {
             exc.printStackTrace();
-            System.out.println("Invalid Login");
             model.put("var", "Invalid Login");
             outcome = renderTemplate("velocity/login.vm", model);
         }
