@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Map;
 
 import static spark.Spark.get;
@@ -35,6 +36,7 @@ public class CreateAccountRoute extends TemplateRenderer {
             //Pull values from form
             String email = req.queryParams("email");
             String password = req.queryParams("password");
+            String confirmPassword = req.queryParams("confirmpassword");
             String firstName = req.queryParams("firstname");
             String lastName = req.queryParams("lastname");
             String address = req.queryParams("address");
@@ -43,6 +45,10 @@ public class CreateAccountRoute extends TemplateRenderer {
             //Throws exception if any required fields are left blank
             if (email.equalsIgnoreCase("") || password.equalsIgnoreCase("") || firstName.equalsIgnoreCase("") || lastName.equalsIgnoreCase("") || address.equalsIgnoreCase("") ) {
                 throw new IOException(); }
+
+            //Throws exception if the passwords don't match
+            if (!password.equals(confirmPassword))  {
+                throw new InputMismatchException(); }
 
             if (cardNumber.equalsIgnoreCase("")) {
                 cardNumber = "0"; }
@@ -60,6 +66,11 @@ public class CreateAccountRoute extends TemplateRenderer {
         //Catches exception if any required fields are left blank
         catch (IOException ioe) {
             model.put("var", "All items with * are required.");
+            sendTo = renderTemplate("velocity/createAccount.vm", model); }
+
+        //Catches exception if passwords don't match
+        catch (InputMismatchException ime) {
+            model.put("var", "Passwords don't match.");
             sendTo = renderTemplate("velocity/createAccount.vm", model); }
 
         //Catches exception if something goes wrong while adding account to database
