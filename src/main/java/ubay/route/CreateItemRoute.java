@@ -10,7 +10,7 @@ import java.util.Map;
 
 import static spark.Spark.get;
 import static spark.Spark.put;
-import static ubay.application.Ubay.con;
+import static ubay.database.DatabaseConnection.con;
 
 public class CreateItemRoute extends TemplateRenderer {
 

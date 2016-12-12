@@ -1,15 +1,16 @@
 <nav class="navbar navbar-default container">
     <div class="collapse navbar-collapse">
+
         <form class="navbar-form navbar-left">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search">
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
-        <form class="navbar-form navbar-right">
-            <button ic-target="#login-form" ic-get-from="/login-template" class="btn btn-default">Log In</button>
-            <button ic-target="#createItem-form" ic-get-from="/createItem-template" class="btn btn-default">Create Item</button>
-        </form>
+        <div class="navbar-form navbar-right">
+            <button ic-target="#login-form" ic-get-from="/login/template" class="btn btn-default">Log In</button>
+            <button ic-target="#login-form" ic-get-from="/account/create/template" class="btn btn-default">Create Account</button>
+        </div>
     </div>
 </nav>
 
