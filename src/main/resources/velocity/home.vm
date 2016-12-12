@@ -1,13 +1,11 @@
-<header ic-include='{"status":"$status"}'>
-    <form id="todo-form" ic-post-to="/todos">
-        <input id="new-todo" placeholder="What needs to be done?" name="todo-title" pattern=".{4,}" required title="> 3 chars" autofocus>
-    </form>
-</header>
-
-<section>
-
-</section>
-
-<footer>
-
-</footer>
+<div class="row item-list">
+    #foreach($item in $items)
+        <div class="item col-sm-4">
+            <a href="">
+                <h3>$item.getName()</h3>
+                <img class="img-responsive" src="$item.getPhotoUrl()">
+                <p>$item.getDescription()</p>
+            </a>
+        </div>
+    #end
+</div>
