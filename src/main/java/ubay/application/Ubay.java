@@ -2,6 +2,7 @@ package ubay.application;
 
 import ubay.database.DatabaseConnection;
 import ubay.route.*;
+import ubay.model.Account;
 
 import static spark.Spark.*;
 
@@ -26,4 +27,5 @@ public class Ubay {
         new MyAccountRoute();
         new EditAccountRoute();
     }
+
 }

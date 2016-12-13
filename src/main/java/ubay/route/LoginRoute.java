@@ -41,8 +41,15 @@ public class LoginRoute extends TemplateRenderer {
             rs.next();
 
             //Creates account object
-            Account aAccount = new Account(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getString("password"), rs.getString("address"));
-            aAccount.setCard(rs.getInt("card"));
+            //Account aAccount = new Account(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getString("password"), rs.getString("address"));
+            //aAccount.setCard(rs.getInt("card"));
+
+            Account.getLoggedInUser().setFirstname(rs.getString("first_name"));
+            Account.getLoggedInUser().setLastname(rs.getString("last_name"));
+            Account.getLoggedInUser().setEmail(rs.getString("email"));
+            Account.getLoggedInUser().setPassword(rs.getString("password"));
+            Account.getLoggedInUser().setAddress(rs.getString("address"));
+            Account.getLoggedInUser().setCard(rs.getInt("card"));
 
             sendTo = renderTemplate("velocity/home.vm", model); }
 

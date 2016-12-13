@@ -58,8 +58,14 @@ public class CreateAccountRoute extends TemplateRenderer {
             stmt.execute("INSERT INTO account VALUES (NULL, '"+email+"', '"+password+"', '"+firstName+"', '"+lastName+"', '"+address+"', '"+cardNumber+"')");
 
             //Create account object
-            Account aAccount = new Account(firstName, lastName, email, password, address);
-            aAccount.setCard(Integer.parseInt(cardNumber));
+            //Account aAccount = new Account(firstName, lastName, email, password, address);
+            //aAccount.setCard(Integer.parseInt(cardNumber));
+            Account.getLoggedInUser().setFirstname(firstName);
+            Account.getLoggedInUser().setLastname(lastName);
+            Account.getLoggedInUser().setEmail(email);
+            Account.getLoggedInUser().setPassword(password);
+            Account.getLoggedInUser().setAddress(address);
+            Account.getLoggedInUser().setCard(Integer.parseInt(cardNumber));
 
             sendTo = renderTemplate("velocity/home.vm", model); }
 

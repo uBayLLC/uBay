@@ -13,6 +13,26 @@ public class Account {
     @NonNull private String address;
     private int card = 0;
 
+    private static Account loggedInUser = null;
+
+    public static Account getLoggedInUser() {
+        if (loggedInUser == null) {
+            loggedInUser = new Account(); }
+        return loggedInUser;
+    }
+
+    private Account() {
+        firstname = null;
+        lastname = null;
+        email = null;
+        password = null;
+        address = null;
+        card = 0; }
 }
+
+
+
+
+
 
 

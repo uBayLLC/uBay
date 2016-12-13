@@ -1,5 +1,42 @@
 <form ic-post-to="/account/edit-account/data">
 
-<body>TEST</body>
+    <div class="form-group">
+        <label for="email">Email Address*</label>
+        <input type="email" name="email" class="form-control" id="email" value=$email>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password*</label>
+        <input type="password" name="password" class="form-control" id="password" value=$password>
+    </div>
+
+    <div class="form-group">
+        <label for="confirmpassword">Confirm Password*</label>
+        <input type="password" name="confirmpassword" class="form-control" id="confirmpassword" value=$password>
+    </div>
+
+    <div class="form-group">
+        <label for="firstname">First Name*</label>
+        <input type="name" name="firstname" class="form-control" id="firstname" value=$firstname>
+    </div>
+
+    <div class="form-group">
+        <label for="lastname">Last Name*</label>
+        <input type="name" name="lastname" class="form-control" id="lastname" value=$lastname>
+    </div>
+
+    <div class="form-group">
+        <label for="address">Address*</label>
+        <textarea name="address" name="address" class="form-control" id="address" value=$address></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="cardnumber">Card Number</label>
+        <input type="cardnumber" name="cardnumber" class="form-control" id="cardnumber" value=$cardnumber>
+    </div>
+
+    <font color="red"> <b> <p>$var</p> </b> </font>
+
+    <button class="btn btn-default">Submit Changes</button>
 
 </form>
