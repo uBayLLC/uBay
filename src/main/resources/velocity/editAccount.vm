@@ -1,0 +1,5 @@
+<form ic-post-to="/account/edit-account/data">
+
+<body>TEST</body>
+
+</form>

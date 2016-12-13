@@ -23,5 +23,7 @@ public class Ubay {
         new IndexRoute();
         new CreateAccountRoute();
         new LoginRoute();
+        new MyAccountRoute();
+        new EditAccountRoute();
     }
 }
