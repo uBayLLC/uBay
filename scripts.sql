@@ -50,6 +50,7 @@ CREATE TABLE auction (
     starting_price INT NOT NULL,
     buy_out_price INT NOT NULL,
     bid_id INT NOT NULL,
+    `end_datetime` DATETIME NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (item_id) REFERENCES item(id) ON DELETE CASCADE,
     FOREIGN KEY (bid_id) REFERENCES bid(id) ON DELETE CASCADE
@@ -91,12 +92,12 @@ INSERT INTO item VALUES
 	(NULL, 'Fresh Soul #420', 'Blazit.', 'https://goo.gl/8NOEVb', '5', '1'),
 	(NULL, 'The Karate Kid', 'He\'s only 11 though', 'https://goo.gl/wERXE3', '1', '2'),
 	(NULL, 'A Rock Bottom', 'I\'ll give you a real one.', 'https://goo.gl/p9Q2zr', '4', '5');
-	
+
 INSERT INTO auction VALUES
-	(NULL, '1', '500', '1000000', '2'),
-	(NULL, '2', '42', '4200000', '3'),
-	(NULL, '3', '10000', '3000000', '1'),
-	(NULL, '4', '1000', '500000', '2');
+	(NULL, '1', '500', '1000000', '2', '2016-06-01 00:00:00'),
+	(NULL, '2', '42', '4200000', '3', '2017-01-10 00:00:00'),
+	(NULL, '3', '10000', '3000000', '1', '2016-12-25 00:00:00'),
+	(NULL, '4', '1000', '500000', '2', '2016-12-30 00:00:00');
 	
 INSERT INTO receipt VALUES
 	(NULL, '123123123', '4'),
