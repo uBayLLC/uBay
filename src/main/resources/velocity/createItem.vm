@@ -14,6 +14,17 @@
     <div class="form-group">
         <label for="ExampleTag">Tag</label>
         <input type="tag" name="tag" class="form-control" id="ExampleTag" placeholder="Tag">
+
+        <div class="form-group">
+            <label for="starting_price">Starting price</label>
+            <input type="starting_price" name="starting_price" class="form-control" id="starting_price" placeholder="starting_price">
+        </div>
+
+        <div class="form-group">
+            <label for="end_date">End time</label>
+            <input type="end_date" name="end_date" class="form-control" id="end_date" placeholder="End Time format: yyyy-MM-dd HH:mm:ss">
+        </div>
+
     </div>
-    <button class="btn btn-default">Create Item</button>
+    <button class="btn btn-default">Create Listing</button>
 </form>
