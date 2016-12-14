@@ -8,60 +8,60 @@ DROP TABLE account;
 
 -- Create Statements
 CREATE TABLE account (
-    id INT NOT NULL AUTO_INCREMENT,
+    account_id INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(253) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     address VARCHAR(60) NOT NULL,
     card INT,
-    PRIMARY KEY (id)
+    PRIMARY KEY (account_id)
 );
 
 CREATE TABLE bid (
-    id INT NOT NULL AUTO_INCREMENT,
+    bid_id INT NOT NULL AUTO_INCREMENT,
     buyer_id INT NOT NULL,
     bid_amount INT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (buyer_id) REFERENCES account(id) ON DELETE CASCADE
+    PRIMARY KEY (bid_id),
+    FOREIGN KEY (buyer_id) REFERENCES account(account_id) ON DELETE CASCADE
 );
 
 CREATE TABLE tag (
-    id INT NOT NULL AUTO_INCREMENT,
+    tag_id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (tag_id)
 );
 
 CREATE TABLE item (
-    id INT NOT NULL AUTO_INCREMENT, 
+    item_id INT NOT NULL AUTO_INCREMENT, 
     name VARCHAR(30) NOT NULL,
     description VARCHAR(500) NOT NULL,
     photo VARCHAR(535) NOT NULL,
     seller_id INT NOT NULL,
     tag_id INT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (seller_id) REFERENCES account(id) ON DELETE CASCADE,
-    FOREIGN KEY (tag_id) REFERENCES tag(id) ON DELETE CASCADE
+    PRIMARY KEY (item_id),
+    FOREIGN KEY (seller_id) REFERENCES account(account_id) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES tag(tag_id) ON DELETE CASCADE
 );
 
 CREATE TABLE auction (
-    id INT NOT NULL AUTO_INCREMENT,
+    auction_id INT NOT NULL AUTO_INCREMENT,
     item_id INT NOT NULL,
     starting_price INT NOT NULL,
     buy_out_price INT NOT NULL,
     bid_id INT NOT NULL,
     `end_datetime` DATETIME NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (item_id) REFERENCES item(id) ON DELETE CASCADE,
-    FOREIGN KEY (bid_id) REFERENCES bid(id) ON DELETE CASCADE
+    PRIMARY KEY (auction_id),
+    FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE,
+    FOREIGN KEY (bid_id) REFERENCES bid(bid_id) ON DELETE CASCADE
 );
 
 CREATE TABLE receipt (
-    id INT NOT NULL AUTO_INCREMENT,
+    receipt_id INT NOT NULL AUTO_INCREMENT,
     card INT NOT NULL,
     auction_id INT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (auction_id) REFERENCES auction(id) ON DELETE CASCADE
+    PRIMARY KEY (receipt_id),
+    FOREIGN KEY (auction_id) REFERENCES auction(auction_id) ON DELETE CASCADE
 );
 
 -- Insert test data
