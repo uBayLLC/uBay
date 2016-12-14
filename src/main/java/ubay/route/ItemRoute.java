@@ -83,7 +83,7 @@ public class ItemRoute extends TemplateRenderer {
                 auction = new Auction(
                         item,
                         resultSet.getInt("starting_price"),
-                        resultSet.getDate("end_datetime"),
+                        resultSet.getTimestamp("end_datetime"),
                         resultSet.getInt("buy_out_price"),
                         bid); }
 

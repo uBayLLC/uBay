@@ -14,13 +14,14 @@ public class AuctionRoute {
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dt = new Date();
-        System.out.println(dateFormat.format(dt));
 
         try {
 
         PreparedStatement stmt = con.prepareStatement("SELECT bid_amount, end_datetime FROM bid, auction WHERE bid.bid_id = auction.bid_id");
         ResultSet rs = stmt.executeQuery();
+        rs.next();
 
+        System.out.println(rs.getTimestamp("end_datetime"));
 
         while (rs.next()) {
             int result = dateFormat.format(dt).compareTo(rs.getString("end_datetime"));
