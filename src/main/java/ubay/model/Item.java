@@ -11,7 +11,7 @@ public class Item {
     @NonNull private String name;
     @NonNull private String description;
     @NonNull private String photoUrl;
-    @NonNull private String seller;
-    @NonNull private List<Tag> tags;
+    @NonNull private int seller;
+    @NonNull private int tag;
 
 }
