@@ -1,43 +1,42 @@
 package ubay.route;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static spark.Spark.get;
 
 import spark.Request;
 import ubay.model.Item;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static spark.Spark.get;
 import static ubay.database.DatabaseConnection.con;
 
-public class IndexRoute extends TemplateRenderer {
+public class ItemRoute extends TemplateRenderer {
 
-    public IndexRoute() {
-        get("/", (req, res) -> renderIndex(req));
+    public ItemRoute() {
+        get("/item/template/:id", (req, res) -> renderItemTemplate(req));
     }
 
-    private String renderIndex(Request req) {
+    private String renderItemTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
-        model.put("items",  getItems());
-        return renderTemplate("velocity/index.vm", model);
+        model.put("item", getItem(req));
+        return renderTemplate("velocity/item.vm", model);
     }
 
-    private List<Item> getItems() {
+    private Item getItem(Request req) {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        List<Item> items = new ArrayList<>();
+        Item item = null;
 
         try {
-            preparedStatement = con.prepareStatement("SELECT * FROM item");
+            preparedStatement = con.prepareStatement("SELECT * FROM item WHERE id = ?");
+            preparedStatement.setInt(1, Integer.parseInt(req.params(":id")));
             resultSet = preparedStatement.executeQuery();
 
-            while(resultSet.next()) {
-                Item item = new Item(
+            while(resultSet.next()){
+                item = new Item(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("description"),
@@ -45,9 +44,9 @@ public class IndexRoute extends TemplateRenderer {
                         resultSet.getInt("seller_id"),
                         resultSet.getInt("tag_id")
                 );
-                items.add(item);
             }
-        } catch(SQLException e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             if (resultSet != null) {
@@ -58,6 +57,6 @@ public class IndexRoute extends TemplateRenderer {
             }
         }
 
-        return items;
+        return item;
     }
 }
