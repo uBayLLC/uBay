@@ -29,7 +29,7 @@ public class Account {
         password = null;
         address = null;
         card = -1;
-        id = -1;}
+        id = -1; }
 }
 
 
