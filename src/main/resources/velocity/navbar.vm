@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default container">
     <div class="collapse navbar-collapse">
-        <a class="navbar-brand" href="#">ubay</a>
-
+        <a class="navbar-brand" href="">ubay</a>
+        
         <form class="navbar-form navbar-left">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Search">
@@ -12,6 +12,7 @@
         <div class="navbar-form navbar-right">
             <button ic-target="#login-form" ic-get-from="/login/template" class="btn btn-default">Log In</button>
             <button ic-target="#login-form" ic-get-from="/account/create/template" class="btn btn-default">Create Account</button>
+            <button ic-target="#login-form" ic-get-from="/account/my-account/template" class="btn btn-default">My Account</button>
         </div>
 
     </div>
