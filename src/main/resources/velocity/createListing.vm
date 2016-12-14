@@ -1,0 +1,10 @@
+<form ic-post-to="/listing/data">
+
+    </div>
+    <div class="form-group">
+        <label for="ExampleEndTime">yyyy-MM-dd HH:mm:ss</label>
+        <input type="endtime" name="endtime" class="form-control" id="ExampleEndTime" placeholder="endtime">
+    </div>
+
+    <button class="btn btn-default">Create Item Listing</button>
+</form>

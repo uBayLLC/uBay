@@ -54,7 +54,7 @@ public class CreateItemRoute extends TemplateRenderer {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Intem cannot be created at this time.  ¯\\_(ツ)_/¯");
+            System.out.println("Item cannot be created at this time.  ¯\\_(ツ)_/¯");
         }
 
         return renderTemplate("velocity/home.vm", new HashMap());
