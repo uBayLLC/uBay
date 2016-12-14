@@ -1,8 +1,15 @@
 .item {
-    background-color: #999999;
-    border-radius: 10px;
+    border: 1px solid #bfbfbf;
 }
 
 .item a:hover {
     text-decoration: none;
+}
+
+.item-img {
+    object-fit: contain;
+}
+
+.item-img img {
+    width: 100%;
 }

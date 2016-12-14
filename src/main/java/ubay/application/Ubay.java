@@ -21,8 +21,16 @@ public class Ubay {
 
     private static void initializeRoutes() {
         new IndexRoute();
+        new ItemRoute();
         new CreateAccountRoute();
         new LoginRoute();
+<<<<<<< HEAD
         new CreateItemRoute();
+=======
+        new MyAccountRoute();
+        new EditAccountRoute();
+        new AuctionRoute();
+>>>>>>> master
     }
+
 }
