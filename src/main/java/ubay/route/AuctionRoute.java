@@ -18,7 +18,7 @@ public class AuctionRoute {
 
         try {
 
-        PreparedStatement stmt = con.prepareStatement("SELECT bid_amount, end_datetime FROM bid, auction WHERE bid.id = auction.bid_id");
+        PreparedStatement stmt = con.prepareStatement("SELECT bid_amount, end_datetime FROM bid, auction WHERE bid.bid_id = auction.bid_id");
         ResultSet rs = stmt.executeQuery();
 
 

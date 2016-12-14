@@ -38,7 +38,7 @@ public class IndexRoute extends TemplateRenderer {
 
             while(resultSet.next()) {
                 Item item = new Item(
-                        resultSet.getInt("id"),
+                        resultSet.getInt("item_id"),
                         resultSet.getString("name"),
                         resultSet.getString("description"),
                         resultSet.getString("photo"),

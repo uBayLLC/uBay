@@ -4,10 +4,34 @@
     </div>
 </row>
 <row>
+
     <div class="col-md-6 item-img">
         <img class="img-responsive" src="$item.getPhotoUrl()">
     </div>
+
     <div class="col-md-6">
+        <label>Description:</label>
         <p>$item.getDescription()</p>
     </div>
+
+    <div class="col-md-6">
+        <label>Starting Price:</label>
+        <p>$$auction.getStartingPrice()</p>
+    </div>
+
+    <div class="col-md-6">
+        <label>End Date:</label>
+        <p>$auction.getEndDateTime()</p>
+    </div>
+
+    <div class="col-md-6">
+        <label>Instant Buy Price:</label>
+        <p>$$auction.getBuyOutPrice()</p>
+    </div>
+
+    <div class="col-md-6">
+        <label>Highest Bid:</label>
+        <p>$$bid.getAmount()</p>
+    </div>
+
 </row>
