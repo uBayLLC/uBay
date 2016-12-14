@@ -52,12 +52,13 @@ public class EditAccountRoute extends TemplateRenderer {
             if (!password.equals(confirmPassword)) {
                 throw new InputMismatchException(); }
 
+            //Sets card number to -1 if user didn't enter one
             if (cardNumber.equalsIgnoreCase("")) {
-                cardNumber = "0"; }
+                cardNumber = "-1"; }
 
             //Update account info on database
-            //Statement stmt = con.createStatement();
-            //stmt.execute("INSERT INTO account VALUES (NULL, '" + email + "', '" + password + "', '" + firstName + "', '" + lastName + "', '" + address + "', '" + cardNumber + "')");
+            PreparedStatement stmt = con.prepareStatement("UPDATE account SET email='" + email + "', password='" + password + "', first_name='" + firstName + "', last_name='" + lastName + "', address='" + address + "', card='" + cardNumber + "' WHERE id='" +Account.getLoggedInUser().getId()+ "';");
+            stmt.executeUpdate();
 
             //Update Account Object
             Account.getLoggedInUser().setEmail(email);
@@ -96,6 +97,10 @@ public class EditAccountRoute extends TemplateRenderer {
         model.put("firstname", Account.getLoggedInUser().getFirstname());
         model.put("lastname", Account.getLoggedInUser().getLastname());
         model.put("address", Account.getLoggedInUser().getAddress());
-        model.put("cardnumber", Account.getLoggedInUser().getCard()); }
+        
+        if (Account.getLoggedInUser().getCard() == -1) {
+            model.put("cardnumber", ""); }
+        else {
+            model.put("cardnumber", Account.getLoggedInUser().getCard()); } }
 
 }

@@ -11,6 +11,7 @@ public class Account {
     @NonNull private String email;
     @NonNull private String password;
     @NonNull private String address;
+    @NonNull private int id;
     private int card = 0;
 
     private static Account loggedInUser = null;
@@ -27,7 +28,8 @@ public class Account {
         email = null;
         password = null;
         address = null;
-        card = 0; }
+        card = -1;
+        id = -1;}
 }
 
 

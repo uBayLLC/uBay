@@ -4,6 +4,8 @@ import spark.Request;
 import ubay.model.Account;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -50,22 +52,27 @@ public class CreateAccountRoute extends TemplateRenderer {
             if (!password.equals(confirmPassword))  {
                 throw new InputMismatchException(); }
 
+            //Sets card number to -1 if user didn't enter one
             if (cardNumber.equalsIgnoreCase("")) {
-                cardNumber = "0"; }
+                cardNumber = "-1"; }
 
             //Add account to database
-            Statement stmt = con.createStatement();
-            stmt.execute("INSERT INTO account VALUES (NULL, '"+email+"', '"+password+"', '"+firstName+"', '"+lastName+"', '"+address+"', '"+cardNumber+"')");
+            PreparedStatement addAccountToDB = con.prepareStatement("INSERT INTO account VALUES (NULL, '"+email+"', '"+password+"', '"+firstName+"', '"+lastName+"', '"+address+"', '" +cardNumber+ "')");
+            addAccountToDB.executeUpdate();
+
+            //Get id of new account
+            PreparedStatement getIdFromDB = con.prepareStatement("SELECT id FROM account WHERE email='" +email+ "';");
+            ResultSet rs = getIdFromDB.executeQuery();
+            rs.next();
 
             //Create account object
-            //Account aAccount = new Account(firstName, lastName, email, password, address);
-            //aAccount.setCard(Integer.parseInt(cardNumber));
             Account.getLoggedInUser().setFirstname(firstName);
             Account.getLoggedInUser().setLastname(lastName);
             Account.getLoggedInUser().setEmail(email);
             Account.getLoggedInUser().setPassword(password);
             Account.getLoggedInUser().setAddress(address);
             Account.getLoggedInUser().setCard(Integer.parseInt(cardNumber));
+            Account.getLoggedInUser().setId(rs.getInt("id"));
 
             sendTo = renderTemplate("velocity/home.vm", model); }
 
