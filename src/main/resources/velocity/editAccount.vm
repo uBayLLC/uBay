@@ -1,4 +1,4 @@
-<form ic-post-to="/account/edit-account/data">
+<form ic-post-to="/account/edit/data" ic-target="this" ic-replace-target="true" class="row">
 
     <div class="form-group">
         <label for="email">Email Address*</label>
@@ -35,7 +35,7 @@
         <input type="cardnumber" name="cardnumber" class="form-control" id="cardnumber" value=$cardnumber>
     </div>
 
-    <font color="red"> <b> <p>$var</p> </b> </font>
+    <p class="error">$error</p>
 
     <button class="btn btn-default">Submit Changes</button>
 

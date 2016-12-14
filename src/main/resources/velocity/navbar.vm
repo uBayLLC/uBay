@@ -10,9 +10,9 @@
         </form>
 
         <div class="navbar-form navbar-right">
-            <button ic-target="#login-form" ic-get-from="/login/template" class="btn btn-default">Log In</button>
+            <button ic-target="#login-form" ic-get-from="/account/login/template" class="btn btn-default">Log In</button>
             <button ic-target="#login-form" ic-get-from="/account/create/template" class="btn btn-default">Create Account</button>
-            <button ic-target="#login-form" ic-get-from="/account/my-account/template" class="btn btn-default">My Account</button>
+            <button ic-target="#login-form" ic-get-from="/account/buttons/template" class="btn btn-default">My Account</button>
         </div>
 
     </div>

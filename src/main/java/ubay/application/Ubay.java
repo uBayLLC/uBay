@@ -22,10 +22,11 @@ public class Ubay {
     private static void initializeRoutes() {
         new IndexRoute();
         new ItemRoute();
-        new CreateAccountRoute();
-        new LoginRoute();
-        new MyAccountRoute();
-        new EditAccountRoute();
+        new AccountRoute();
+//        new CreateAccountRoute();
+//        new LoginRoute();
+//        new MyAccountRoute();
+//        new EditAccountRoute();
     }
 
 }
