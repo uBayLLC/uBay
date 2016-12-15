@@ -24,11 +24,10 @@ public class Ubay {
         new ItemRoute();
         new CreateAccountRoute();
         new LoginRoute();
-        new CreateItemRoute();
+        new CreateItemListingRoute();
         new MyAccountRoute();
         new EditAccountRoute();
         new AuctionRoute();
-        new CreateListingRoute();
     }
 
 }
