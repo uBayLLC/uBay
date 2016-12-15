@@ -49,13 +49,28 @@ public class CreateItemListingRoute extends TemplateRenderer {
 
 
         try {
+
+            if (soulRadio.equals("on")) {
+                tag_id = "1";
+            } else if (peopleRadio.equals("on")) {
+                tag_id = "2";
+            } else if (techRadio.equals("on")) {
+                tag_id = "3";
+            } else if (toyRadio.equals("on")) {
+                tag_id = "4";
+            } else if (servRadio.equals("on")) {
+                tag_id = "5";
+            } else {
+                tag_id = null;
+            }
+
             //Create item
             PreparedStatement preparedStatementItem = con.prepareStatement("INSERT INTO item (name, description, photo, seller_id, tag_id) VALUES (?,?,?,?,?)");
             preparedStatementItem.setString(1, itemName);
             preparedStatementItem.setString(2, description);
             preparedStatementItem.setString(3, photolink);
             preparedStatementItem.setInt(4, 1);
-            preparedStatementItem.setInt(5, 1);
+            preparedStatementItem.setInt(5, Integer.parseInt(tag_id));
             int result = preparedStatementItem.executeUpdate();
             if (result != 0) {
                 System.out.println("Success");
@@ -75,19 +90,6 @@ public class CreateItemListingRoute extends TemplateRenderer {
                 itemID = resultSet.getInt("item_id");
             }
 
-            if (soulRadio.equals("on")) {
-                tag_id = "1";
-            } else if (peopleRadio.equals("on")) {
-                tag_id = "2";
-            } else if (techRadio.equals("on")) {
-                tag_id = "3";
-            } else if (toyRadio.equals("on")) {
-                tag_id = "4";
-            } else if (servRadio.equals("on")) {
-                tag_id = "5";
-            } else {
-                tag_id = null;
-            }
             //Create Auction
             PreparedStatement preparedStatementListing = con.prepareStatement("INSERT  INTO auction (item_id, starting_price, bid_id, end_datetime) VALUES (?,?,?,?)");
             preparedStatementListing.setInt(1, itemID);
