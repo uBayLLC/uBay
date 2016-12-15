@@ -58,6 +58,11 @@ public class ItemRoute extends TemplateRenderer {
             if (newBid <= bidsFromDB.getInt("bid_amount")) {
                 throw new IllegalArgumentException(); }
 
+            PreparedStatement sendBidToDB = con.prepareStatement("INSERT INTO bid VALUES (NULL, " +Account.getLoggedInUser().getId()+ ", " +newBid+ ";");
+            sendBidToDB.executeUpdate();
+            PreparedStatement updateAuctionsBidID = con.prepareStatement("UPDATE auction SET auction.bid_id = max(bid.bid_id);");
+            updateAuctionsBidID.executeUpdate();
+
             bid = new Bid(
                     Account.getLoggedInUser(),
                     newBid);
@@ -176,4 +181,5 @@ public class ItemRoute extends TemplateRenderer {
 
         return item;
     }
+
 }

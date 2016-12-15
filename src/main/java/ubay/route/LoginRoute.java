@@ -24,6 +24,8 @@ public class LoginRoute extends TemplateRenderer {
     private String renderLoginTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
         model.put("var", "");
+        model.put("foo", "hidden");
+        //System.out.println(req.queryParams("test"));
         return renderTemplate("velocity/login.vm", model);
     }
 
