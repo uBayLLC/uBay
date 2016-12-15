@@ -3,7 +3,9 @@ package ubay.route;
 import spark.Request;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,18 +33,15 @@ public class CreateItemListingRoute extends TemplateRenderer {
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        String itemName = req.queryParams("itemName");
+        String itemName = req.queryParams("name");
         String description = req.queryParams("description");
         String photolink = req.queryParams("photolink");
         String seller_id = req.queryParams("seller_id");
         String tag_id = req.queryParams("tag_id");
-        String starting_price = req.queryParams("starting_price");
+        String price = req.queryParams("starting_price");
         String end_datetime = req.queryParams("end_datetime");
         String bid_id = req.queryParams("bid_id");
         String item_id = req.queryParams("item_id");
-
-
-
 
         try {
             //Create item
@@ -59,24 +58,35 @@ public class CreateItemListingRoute extends TemplateRenderer {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Item cannot be created at this time.  ¯\\_(ツ)_/¯");
-
-
-            try {
-                //Create Auction
-                PreparedStatement preparedStatementListing = con.prepareStatement("INSERT  INTO auction (item_id, starting_price, bid_id, end_datetime) VALUES (?,?,?,?)");
-                preparedStatementListing.setString(1, item_id);
-                preparedStatementListing.setString(2, starting_price);
-                preparedStatementListing.setInt(3, 1);
-                preparedStatementListing.setString(4, end_datetime);
-                int result = preparedStatementListing.executeUpdate();
-                if (result != 0) {
-                    System.out.println("Success");
-                }
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-                System.out.println("Listing cannot be created at this time.  ¯\\_(ツ)_/¯");
-            }
         }
+
+
+        try {
+            int itemID = 0;
+            PreparedStatement preparedStatementFindItem = con.prepareStatement("SELECT item_id FROM item WHERE name = ''?'' ");
+            preparedStatementFindItem.setString(1, itemName);
+            ResultSet resultSet = preparedStatementFindItem.executeQuery();
+            if (resultSet.next()) {
+                itemID = resultSet.getInt("item_id");
+            }
+
+            //Create Auction
+            PreparedStatement preparedStatementListing = con.prepareStatement("INSERT  INTO auction (item_id, starting_price, bid_id, end_datetime) VALUES (?,?,?,?)");
+            preparedStatementListing.setInt(1, itemID);
+            preparedStatementListing.setString(2, price);
+            preparedStatementListing.setInt(3, 1);
+            preparedStatementListing.setString(4, end_datetime);
+            int result = preparedStatementListing.executeUpdate();
+            if (result != 0) {
+                System.out.println("Success");
+                System.out.println(itemID);
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            System.out.println("Listing cannot be created at this time.  ¯\\_(ツ)_/¯");
+        }
+
+
         return renderTemplate("velocity/createItemListing.vm", new HashMap());
     }
 }
