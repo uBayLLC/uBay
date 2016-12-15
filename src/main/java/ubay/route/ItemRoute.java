@@ -58,9 +58,12 @@ public class ItemRoute extends TemplateRenderer {
             if (newBid <= bidsFromDB.getInt("bid_amount")) {
                 throw new IllegalArgumentException(); }
             
-            PreparedStatement sendBidToDB = con.prepareStatement("INSERT INTO bid VALUES (NULL, " +Account.getLoggedInUser().getId()+ ", " +newBid+ ";");
+            PreparedStatement sendBidToDB = con.prepareStatement("INSERT INTO bid VALUES (NULL, ?, ?)");
+            sendBidToDB.setInt(1, Account.getLoggedInUser().getId());
+            sendBidToDB.setInt(2, newBid);
             sendBidToDB.executeUpdate();
-            PreparedStatement updateAuctionsBidID = con.prepareStatement("UPDATE auction SET auction.bid_id = (SELECT max(bid_id) FROM bid) WHERE auction.item_id =" +itemId+";");
+            PreparedStatement updateAuctionsBidID = con.prepareStatement("UPDATE auction SET auction.bid_id = (SELECT max(bid_id) FROM bid) WHERE auction.item_id = ?");
+            updateAuctionsBidID.setInt(1, itemId);
             updateAuctionsBidID.executeUpdate();
 
             bid = new Bid(
@@ -78,7 +81,7 @@ public class ItemRoute extends TemplateRenderer {
 
         catch (SQLException sqle) {
             sqle.printStackTrace();
-            bidData.put("error", "An error occurred please try again."); }
+            bidData.put("error", "Please log in."); }
 
         return bidData; }
 
@@ -88,12 +91,19 @@ public class ItemRoute extends TemplateRenderer {
         Bid bid = null;
 
         try {
-            preparedStatement = con.prepareStatement("SELECT bid_amount FROM bid JOIN auction ON bid.bid_id = auction.bid_id WHERE auction.item_id = " + itemId);
+            preparedStatement = con.prepareStatement("SELECT account.first_name, account.last_name, account.email, account.password, account.address, account.account_id, bid.bid_amount FROM bid JOIN auction ON bid.bid_id = auction.bid_id JOIN account ON bid.buyer_id = account.account_id WHERE auction.item_id = " + itemId);
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
+                Account bidAccount = new Account(
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("address"),
+                        resultSet.getInt("account_id"));
                 bid = new Bid(
-                        Account.getLoggedInUser(),
+                        bidAccount,
                         resultSet.getInt("bid_amount")); }
 
         } catch (SQLException e) {
@@ -136,7 +146,6 @@ public class ItemRoute extends TemplateRenderer {
                         item,
                         resultSet.getInt("starting_price"),
                         resultSet.getTimestamp("end_datetime"),
-                        resultSet.getInt("buy_out_price"),
                         bid); }
 
         } catch (SQLException e) {

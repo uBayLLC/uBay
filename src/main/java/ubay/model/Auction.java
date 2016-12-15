@@ -16,7 +16,6 @@ public class Auction {
     @NonNull private Item item;
     @NonNull private int startingPrice;
     @NonNull private Date endDateTime;
-    @NonNull private int buyOutPrice;
     @NonNull private Bid currentBid;
 
 
