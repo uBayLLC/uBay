@@ -11,11 +11,11 @@
         </form>
 
         <div class="navbar-form navbar-right">
-            <button ic-target="#login-form" ic-get-from="/login/template" class="btn btn-default">Log In</button>
-            <button ic-target="#login-form" ic-get-from="/account/create/template" class="btn btn-default">Create Account</button>
-            <button ic-target="#login-form" ic-get-from="/account/my-account/template" class="btn btn-default">My Account</button>
+            <button ic-target="#home" ic-get-from="/login/template" class="btn btn-default">Log In</button>
+            <button ic-target="#home" ic-get-from="/account/create/template" class="btn btn-default">Create Account</button>
+            <button ic-target="#home" ic-get-from="/account/my-account/template" class="btn btn-default">My Account</button>
         </div>
     </div>
 </nav>
 
-<div class="container" id="login-form"></div>
+<div class="container" id="home"></div>

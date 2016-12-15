@@ -1,24 +1,34 @@
 <form ic-post-to="/item/data">
+
+    <p> <b> All items with * are required. </b> </p>
+
     <div class="form-group">
-        <label for="ExampleItemName">Item Name</label>
+        <label for="ExampleItemName">Item Name*</label>
         <input type="text" name="name" class="form-control" id="ExampleItemName" placeholder="Item Name">
     </div>
+
     <div class="form-group">
-        <label for="ExampleItemDescription">Description</label>
+        <label for="ExampleItemDescription">Description*</label>
         <input type="text" name="description" class="form-control" id="ExampleItemDescription" placeholder="Item Description">
     </div>
+
     <div class="form-group">
         <label for="ExamplePhotoLink">Photo Link</label>
         <input type="text" name="photolink" class="form-control" id="ExamplePhotoLink" placeholder="Link to photo">
     </div>
+
     <div class="form-group">
-        <label for="ExampleStart">Starting Bid</label>
-        <input type="text" name="bid" class="form-control" id="ExampleStart" placeholder="Starting Bid">
+        <label for="ExampleStart">Starting Bid*</label>
+        <input type="text" name="startingbid" class="form-control" id="ExampleStart" placeholder="Starting Bid">
     </div>
+
     <div class="form-group">
-        <label for="ExampleEndTime">yyyy-MM-dd HH:mm:ss</label>
+        <label for="ExampleEndTime">yyyy-MM-dd HH:mm:ss*</label>
         <input type="text" name="end_datetime" class="form-control" id="ExampleEndTime" placeholder="endtime">
     </div>
 
+    <font color="red"> <b> <p>$error</p> </b> </font>
+
     <button class="btn btn-default">Create Item</button>
+
 </form>
