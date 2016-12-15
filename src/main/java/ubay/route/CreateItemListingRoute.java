@@ -82,10 +82,10 @@ public class CreateItemListingRoute extends TemplateRenderer {
 
         try {
             int itemID = 0;
-            PreparedStatement preparedStatementFindItem = con.prepareStatement("SELECT item_id FROM item WHERE name = ''?'' ");
+            PreparedStatement preparedStatementFindItem = con.prepareStatement("SELECT item_id FROM item WHERE name = ? ");
             preparedStatementFindItem.setString(1, itemName);
             ResultSet resultSet = preparedStatementFindItem.executeQuery();
-            if (resultSet.next()) {
+            while (resultSet.next()) {
                 itemID = resultSet.getInt("item_id");
             }
 
