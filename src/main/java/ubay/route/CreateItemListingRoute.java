@@ -125,11 +125,11 @@ public class CreateItemListingRoute extends TemplateRenderer {
 
     private void deleteItem(Map<String, Object> model) {
         try {
-            PreparedStatement in = con.prepareStatement("SELECT max(item_id) FROM item");
-            ResultSet rs = in.executeQuery();
+            PreparedStatement findItemCreated = con.prepareStatement("SELECT max(item_id) FROM item");
+            ResultSet rs = findItemCreated.executeQuery();
             rs.next();
-            PreparedStatement error = con.prepareStatement("DELETE FROM item WHERE item_id = "+Integer.parseInt(rs.getString(1)));
-            error.executeUpdate();
+            PreparedStatement deleteItemCreated = con.prepareStatement("DELETE FROM item WHERE item_id = "+Integer.parseInt(rs.getString(1)));
+            deleteItemCreated.executeUpdate();
         } catch (SQLException sql2) {
             sql2.printStackTrace();
             model.put("error", "error");
