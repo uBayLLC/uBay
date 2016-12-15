@@ -1,0 +1,7 @@
+<form ic-post-to="/item/data">
+    <div class="form-group">
+        <label for="ExampleItemName">Item Name</label>
+        <input type="text" name="name" class="form-control" id="ExampleItemName" placeholder="Item Name">
+    </div>
+    <button class="btn btn-default">Delete</button>
+</form>
