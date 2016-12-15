@@ -45,7 +45,7 @@
 
         <div class="form-group">
             <label for="newbid">Bid:</label>
-            <input type="number" name="newbid" class="form-control" id="newbid" value=$bid.getAmount()>
+            <input type="number" min=$bid.getAmount() onkeydown="return false" maxlength="10" name="newbid" class="form-control" id="newbid" value=$bid.getAmount()>
         </div>
 
         <font color="red"> <b> <p>$error</p> </b> </font>
