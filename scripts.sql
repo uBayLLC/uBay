@@ -45,7 +45,6 @@ CREATE TABLE item (
 );
 
 CREATE TABLE auction (
-<<<<<<< HEAD
   auction_id INT NOT NULL AUTO_INCREMENT,
   item_id INT NOT NULL,
   starting_price INT NOT NULL,
@@ -54,16 +53,6 @@ CREATE TABLE auction (
   PRIMARY KEY (auction_id),
   FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE,
   FOREIGN KEY (bid_id) REFERENCES bid(bid_id) ON DELETE CASCADE
-=======
-    auction_id INT NOT NULL AUTO_INCREMENT,
-    item_id INT NOT NULL,
-    starting_price INT NOT NULL,
-    bid_id INT NOT NULL,
-    `end_datetime` DATETIME NOT NULL,
-    PRIMARY KEY (auction_id),
-    FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE,
-    FOREIGN KEY (bid_id) REFERENCES bid(bid_id) ON DELETE CASCADE
->>>>>>> master
 );
 
 CREATE TABLE receipt (
@@ -104,12 +93,11 @@ INSERT INTO item VALUES
   (NULL, 'A Rock Bottom', 'I\'ll give you a real one.', 'https://goo.gl/p9Q2zr', '4', '5');
 
 INSERT INTO auction VALUES
-	(NULL, '1', '500', '2', '2016-06-01 00:00:00'),
-	(NULL, '2', '42', '3', '2017-01-10 00:00:00'),
-	(NULL, '3', '10000', '1', '2016-12-25 00:00:00'),
-	(NULL, '4', '1000', '2', '2016-12-30 00:00:00');
+  (NULL, '1', '500', '2', '2016-06-01 00:00:00'),
+  (NULL, '2', '42', '3', '2017-01-10 00:00:00'),
+  (NULL, '3', '10000', '1', '2016-12-25 00:00:00'),
+  (NULL, '4', '1000', '2', '2016-12-30 00:00:00');
 	
->>>>>>> master
 INSERT INTO receipt VALUES
   (NULL, '123123123', '4'),
   (NULL, '321321321', '2');

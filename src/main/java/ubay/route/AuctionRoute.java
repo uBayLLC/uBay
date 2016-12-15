@@ -21,8 +21,6 @@ public class AuctionRoute {
         ResultSet rs = stmt.executeQuery();
         rs.next();
 
-        System.out.println(rs.getTimestamp("end_datetime"));
-
         while (rs.next()) {
             int result = dateFormat.format(dt).compareTo(rs.getString("end_datetime"));
 

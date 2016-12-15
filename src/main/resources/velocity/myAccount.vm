@@ -1,4 +1,4 @@
-<form ic-post-to="/account/my-account/data">
+<form>
 
     <button class="btn btn-default" ic-target="#login-form" ic-get-from="/account/edit-account/template">Edit Account</button>
     <button class="btn btn-default" ic-target="#login-form" ic-get-from="/account/my-account/template">View Listings</button>

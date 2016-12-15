@@ -14,34 +14,96 @@ import ubay.model.Item;
 import ubay.model.Auction;
 import ubay.model.Account;
 
+import static spark.Spark.post;
 import static ubay.database.DatabaseConnection.con;
 
 public class ItemRoute extends TemplateRenderer {
 
+    private int itemId;
+
     public ItemRoute() {
-        get("/item/template/:id", (req, res) -> renderItemTemplate(req)); }
+        get("/item/template/:id", (req, res) -> renderItemTemplate(req));
+        post("/item/bid", (req, res) -> renderItemTemplate(req)); }
 
     private String renderItemTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
-        model.put("item", getItem(req));
-        model.put("bid", getBid(req));
-        model.put("auction", getAuction(req));
+
+        model.put("error", "");
+
+        if (req.requestMethod() == "GET" ) {
+            itemId = Integer.parseInt(req.params(":id"));
+            model.put("bid", getBid());
+        } else {
+            Map<String, Object> m = parseBid(req);
+            model.put("bid", m.get("bid"));
+            model.put("error", m.get("error"));
+        }
+
+        model.put("item", getItem());
+        model.put("auction", getAuction());
         return renderTemplate("velocity/item.vm", model);
     }
 
-    private Bid getBid(Request req) {
+    private Map<String, Object> parseBid(Request req) {
+        Map<String, Object> bidData = new HashMap<>();
+        Bid bid = null;
+        int newBid = Integer.parseInt(req.queryParams("newbid"));
+
+        try {PreparedStatement getBidFromDB = con.prepareStatement("SELECT bid_amount FROM bid JOIN auction ON bid.bid_id = auction.bid_id WHERE auction.item_id = ? ORDER BY bid_amount ASC");
+            getBidFromDB.setInt(1, itemId);
+            ResultSet bidsFromDB = getBidFromDB.executeQuery();
+
+            bidsFromDB.next();
+
+            if (newBid <= bidsFromDB.getInt("bid_amount")) {
+                throw new IllegalArgumentException(); }
+            
+            PreparedStatement sendBidToDB = con.prepareStatement("INSERT INTO bid VALUES (NULL, ?, ?)");
+            sendBidToDB.setInt(1, Account.getLoggedInUser().getId());
+            sendBidToDB.setInt(2, newBid);
+            sendBidToDB.executeUpdate();
+            PreparedStatement updateAuctionsBidID = con.prepareStatement("UPDATE auction SET auction.bid_id = (SELECT max(bid_id) FROM bid) WHERE auction.item_id = ?");
+            updateAuctionsBidID.setInt(1, itemId);
+            updateAuctionsBidID.executeUpdate();
+
+            bid = new Bid(
+                    Account.getLoggedInUser(),
+                    newBid);
+
+            bidData.put("error", "");
+            bidData.put("bid", bid);
+        }
+
+        catch (IllegalArgumentException iae) {
+            iae.printStackTrace();
+            bidData.put("error", "Bid must be higher then the current highest bid.");
+            bidData.put("bid", getBid()); }
+
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+            bidData.put("error", "Please log in."); }
+
+        return bidData; }
+
+    private Bid getBid() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Bid bid = null;
 
         try {
-            preparedStatement = con.prepareStatement("SELECT bid_amount FROM bid WHERE bid.bid_id = " + req.params(":id"));
+            preparedStatement = con.prepareStatement("SELECT account.first_name, account.last_name, account.email, account.password, account.address, account.account_id, bid.bid_amount FROM bid JOIN auction ON bid.bid_id = auction.bid_id JOIN account ON bid.buyer_id = account.account_id WHERE auction.item_id = " + itemId);
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
-
+                Account bidAccount = new Account(
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("address"),
+                        resultSet.getInt("account_id"));
                 bid = new Bid(
-                        Account.getLoggedInUser(),
+                        bidAccount,
                         resultSet.getInt("bid_amount")); }
 
         } catch (SQLException e) {
@@ -55,7 +117,7 @@ public class ItemRoute extends TemplateRenderer {
 
         return bid; }
 
-    private Auction getAuction(Request req) {
+    private Auction getAuction() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Auction auction = null;
@@ -63,7 +125,7 @@ public class ItemRoute extends TemplateRenderer {
         Bid bid = null;
 
         try {
-            preparedStatement = con.prepareStatement("SELECT * FROM item JOIN auction ON item.item_id = auction.item_id JOIN bid ON auction.bid_id = bid.bid_id WHERE item.item_id = " + req.params(":id"));
+            preparedStatement = con.prepareStatement("SELECT * FROM item JOIN auction ON item.item_id = auction.item_id JOIN bid ON auction.bid_id = bid.bid_id WHERE item.item_id = " + itemId);
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
@@ -84,7 +146,6 @@ public class ItemRoute extends TemplateRenderer {
                         item,
                         resultSet.getInt("starting_price"),
                         resultSet.getTimestamp("end_datetime"),
-                        resultSet.getInt("buy_out_price"),
                         bid); }
 
         } catch (SQLException e) {
@@ -98,13 +159,13 @@ public class ItemRoute extends TemplateRenderer {
 
         return auction; }
 
-    private Item getItem(Request req) {
+    private Item getItem() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Item item = null;
 
         try {
-            preparedStatement = con.prepareStatement("SELECT * FROM item WHERE item_id = " + req.params(":id"));
+            preparedStatement = con.prepareStatement("SELECT * FROM item WHERE item_id = " + itemId);
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
@@ -129,4 +190,5 @@ public class ItemRoute extends TemplateRenderer {
 
         return item;
     }
+
 }
