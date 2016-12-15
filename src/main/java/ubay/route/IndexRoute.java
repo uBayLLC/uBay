@@ -32,6 +32,7 @@ public class IndexRoute extends TemplateRenderer {
         ResultSet resultSet = null;
         List<Item> items = new ArrayList<>();
 
+
         try {
             preparedStatement = con.prepareStatement("SELECT * FROM item");
             resultSet = preparedStatement.executeQuery();
