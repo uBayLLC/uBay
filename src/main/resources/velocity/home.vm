@@ -1,7 +1,9 @@
 <div class="row item-list">
     #foreach($item in $items)
         <div class="item col-sm-4">
-            <a ic-get-from="/item/template/$item.id" ic-target="#home" href="">
+            #if($loggedIn) <a ic-get-from="/item/edit/$item.id" ic-target="#home" href="">
+            #else <a ic-get-from="/item/template/$item.id" ic-target="#home" href="">
+            #end
                 <h3>$item.getName()</h3>
                 <img class="img-responsive" src="$item.getPhotoUrl()">
                 <p>$item.getDescription()</p>

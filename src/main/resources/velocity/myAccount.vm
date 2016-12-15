@@ -1,7 +1,7 @@
 <form>
 
     <button class="btn btn-default" ic-target="#login-form" ic-get-from="/account/edit-account/template">Edit Account</button>
-    <button class="btn btn-default" ic-target="#login-form" ic-get-from="/account/my-account/template">View Listings</button>
+    <button class="btn btn-default" ic-target="#home" ic-get-from="/item/edit/template">View Listings</button>
     <button class="btn btn-default" ic-target="#login-form" ic-get-from="/item/create-template">Create Listing</button>
     <button class="btn btn-default" ic-target="#login-form" ic-get-from="/item/delete-template"">Delete Listing</button>
 
