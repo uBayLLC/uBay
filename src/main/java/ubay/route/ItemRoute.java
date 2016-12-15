@@ -32,15 +32,15 @@ public class ItemRoute extends TemplateRenderer {
 
         if (req.requestMethod() == "GET" ) {
             itemId = Integer.parseInt(req.params(":id"));
-            model.put("bid", getBid(req));
+            model.put("bid", getBid());
         } else {
             Map<String, Object> m = parseBid(req);
             model.put("bid", m.get("bid"));
             model.put("error", m.get("error"));
         }
 
-        model.put("item", getItem(req));
-        model.put("auction", getAuction(req));
+        model.put("item", getItem());
+        model.put("auction", getAuction());
         return renderTemplate("velocity/item.vm", model);
     }
 
@@ -66,9 +66,10 @@ public class ItemRoute extends TemplateRenderer {
             bidData.put("bid", bid);
         }
 
-        catch(IllegalArgumentException iae) {
+        catch (IllegalArgumentException iae) {
             iae.printStackTrace();
-            bidData.put("error", "Bid must be higher then the current highest bid."); }
+            bidData.put("error", "Bid must be higher then the current highest bid.");
+            bidData.put("bid", getBid()); }
 
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -76,7 +77,7 @@ public class ItemRoute extends TemplateRenderer {
 
         return bidData; }
 
-    private Bid getBid(Request req) {
+    private Bid getBid() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Bid bid = null;
@@ -101,7 +102,7 @@ public class ItemRoute extends TemplateRenderer {
 
         return bid; }
 
-    private Auction getAuction(Request req) {
+    private Auction getAuction() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Auction auction = null;
@@ -144,7 +145,7 @@ public class ItemRoute extends TemplateRenderer {
 
         return auction; }
 
-    private Item getItem(Request req) {
+    private Item getItem() {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         Item item = null;
