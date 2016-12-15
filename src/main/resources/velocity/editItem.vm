@@ -1,0 +1,43 @@
+<form ic-post-to="/item/edit/data">
+    <p><b>All items with * are required.</b></p>
+
+    <div class="form-group">
+        <label for="ExampleItemName">Item Name*</label>
+        <input type="text" name="name" class="form-control" id="ExampleItemName" placeholder="Item Name" value="$auction.getItem().getName()">
+    </div>
+
+    <div class="form-group">
+        <label for="ExampleItemDescription">Description*</label>
+        <input type="text" name="description" class="form-control" id="ExampleItemDescription" placeholder="Item Description" value="$auction.getItem().getDescription()">
+    </div>
+
+    <div class="form-group">
+        <label for="ExamplePhotoLink">Photo Link</label>
+        <input type="text" name="photolink" class="form-control" id="ExamplePhotoLink" placeholder="Link to photo" value="$auction.getItem().getPhotoUrl()">
+    </div>
+
+    <div class="form-group">
+        <label for="ExampleStart">Starting Bid*</label>
+        <input type="text" name="startingbid" class="form-control" id="ExampleStart" placeholder="Starting Bid" value="$auction.getStartingPrice()">
+    </div>
+
+    <div class="form-group">
+        <label for="ExampleEndTime">yyyy-MM-dd HH:mm:ss*</label>
+        <input type="text" name="end_datetime" class="form-control" id="ExampleEndTime" placeholder="endtime" value="$auction.getEndDateTime()">
+    </div>
+
+    <div class="form-group">
+        <label for="EndDate">Enter Auction End Date* (mm/dd/yyyy)</label>
+        <input type="text" name="end_date" class="form-control" id="ExampleEndTime" placeholder="Auction End Date" value="$auction.getEndDate()">
+    </div>
+
+    <div class="form-group">
+        <label for="EndDate">Enter Auction End Time* (hh:mm:ss)</label>
+        <input type="text" name="end_time" class="form-control" id="ExampleEndTime" placeholder="Auction End Time" value="$auction.getEndTime()">
+    </div>
+
+    <font color="red"> <b> <p>$error</p> </b> </font>
+
+    <button class="btn btn-default">Create Item</button>
+
+</form>
