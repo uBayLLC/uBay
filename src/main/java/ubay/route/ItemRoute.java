@@ -57,8 +57,8 @@ public class ItemRoute extends TemplateRenderer {
 
             if (newBid <= bidsFromDB.getInt("bid_amount")) {
                 throw new IllegalArgumentException(); }
-            
-            PreparedStatement sendBidToDB = con.prepareStatement("INSERT INTO bid VALUES (NULL, " +Account.getLoggedInUser().getId()+ ", " +newBid+ ";");
+
+            PreparedStatement sendBidToDB = con.prepareStatement("INSERT INTO bid VALUES (NULL, "+Account.getLoggedInUser().getId()+", "+newBid+");");
             sendBidToDB.executeUpdate();
             PreparedStatement updateAuctionsBidID = con.prepareStatement("UPDATE auction SET auction.bid_id = (SELECT max(bid_id) FROM bid) WHERE auction.item_id =" +itemId+";");
             updateAuctionsBidID.executeUpdate();
@@ -136,7 +136,6 @@ public class ItemRoute extends TemplateRenderer {
                         item,
                         resultSet.getInt("starting_price"),
                         resultSet.getTimestamp("end_datetime"),
-                        resultSet.getInt("buy_out_price"),
                         bid); }
 
         } catch (SQLException e) {

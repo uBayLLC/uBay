@@ -29,11 +29,6 @@
         </div>
 
         <div class="col-md-6">
-            <label>Instant Buy Price:</label>
-            <p>$auction.getBuyOutPrice()</p>
-        </div>
-
-        <div class="col-md-6">
             <label>Starting Price:</label>
             <p>$auction.getStartingPrice()</p>
         </div>
