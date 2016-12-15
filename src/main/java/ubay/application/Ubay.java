@@ -24,6 +24,7 @@ public class Ubay {
         new ItemRoute();
         new CreateAccountRoute();
         new LoginRoute();
+        new CreateItemListingRoute();
         new MyAccountRoute();
         new EditAccountRoute();
         new AuctionRoute();
