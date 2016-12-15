@@ -19,23 +19,6 @@
         <label for="ExampleEndTime">yyyy-MM-dd HH:mm:ss</label>
         <input type="text" name="end_datetime" class="form-control" id="ExampleEndTime" placeholder="endtime">
     </div>
-        <p>Please select a tag  </p>
-        <form>
-            <div class="radio" id="ExampleSoul">
-                <label for="ExampleSoul"><input type="radio" name="souls">Souls</label>
-            </div>
-            <div class="radio" id="ExamplePeople">
-                <label for="ExamplePeople"><input type="radio" name="people">People</label>
-            </div>
-            <div class="radio" id="ExampleTech">
-                <label for="ExampleTech"><input type="radio" name="tech">Technology</label>
-            </div>
-            <div class="radio" id="ExampleToy">
-                <label for="ExampleTechExampleToy"><input type="radio" name="toys">Toys</label>
-            </div>
-            <div class="radio" id="ExampleServ">
-                <label for="ExampleServ"><input type="radio" name="services">Services</label>
-            </div>
-        </form>
+
     <button class="btn btn-default">Create Item</button>
 </form>

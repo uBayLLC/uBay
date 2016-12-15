@@ -37,20 +37,19 @@ public class CreateItemListingRoute extends TemplateRenderer {
         String description = req.queryParams("description");
         String photolink = req.queryParams("photolink");
         String seller_id = req.queryParams("seller_id");
-        String tag_id = req.queryParams("tag_id");
         String price = req.queryParams("starting_price");
         String end_datetime = req.queryParams("end_datetime");
         String bid_id = req.queryParams("bid_id");
-        String soulRadio = req.queryParams("souls");
+       /* String soulRadio = req.queryParams("souls");
         String peopleRadio = req.queryParams("people");
         String techRadio = req.queryParams("tech");
         String toyRadio = req.queryParams("toys");
         String servRadio = req.queryParams("services");
-
+        String tag_id = " "; */
 
         try {
 
-            if (soulRadio.equals("on")) {
+          /*  if (soulRadio.equals("on")) {
                 tag_id = "1";
             } else if (peopleRadio.equals("on")) {
                 tag_id = "2";
@@ -61,8 +60,8 @@ public class CreateItemListingRoute extends TemplateRenderer {
             } else if (servRadio.equals("on")) {
                 tag_id = "5";
             } else {
-                tag_id = null;
-            }
+                tag_id = "0";
+            } */
 
             //Create item
             PreparedStatement preparedStatementItem = con.prepareStatement("INSERT INTO item (name, description, photo, seller_id, tag_id) VALUES (?,?,?,?,?)");
@@ -70,7 +69,7 @@ public class CreateItemListingRoute extends TemplateRenderer {
             preparedStatementItem.setString(2, description);
             preparedStatementItem.setString(3, photolink);
             preparedStatementItem.setInt(4, 1);
-            preparedStatementItem.setInt(5, Integer.parseInt(tag_id));
+            preparedStatementItem.setInt(5, 1);
             int result = preparedStatementItem.executeUpdate();
             if (result != 0) {
                 System.out.println("Success");
@@ -93,13 +92,12 @@ public class CreateItemListingRoute extends TemplateRenderer {
             //Create Auction
             PreparedStatement preparedStatementListing = con.prepareStatement("INSERT  INTO auction (item_id, starting_price, bid_id, end_datetime) VALUES (?,?,?,?)");
             preparedStatementListing.setInt(1, itemID);
-            preparedStatementListing.setString(2, price);
+            preparedStatementListing.setInt(2, Integer.parseInt(price));
             preparedStatementListing.setInt(3, 1);
             preparedStatementListing.setString(4, end_datetime);
             int result = preparedStatementListing.executeUpdate();
             if (result != 0) {
                 System.out.println("Success");
-                System.out.println(itemID);
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
