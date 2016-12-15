@@ -36,7 +36,7 @@ public class CreateItemListingRoute extends TemplateRenderer {
         String itemName = req.queryParams("name");
         String description = req.queryParams("description");
         String photolink = req.queryParams("photolink");
-        String bid = req.queryParams("starting_price");
+        String bid = req.queryParams("bid");
         String end_datetime = req.queryParams("end_datetime");
         String seller_id = req.queryParams("seller_id");
         String bid_id = req.queryParams("bid_id");
