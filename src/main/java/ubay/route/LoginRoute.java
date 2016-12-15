@@ -19,7 +19,9 @@ public class LoginRoute extends TemplateRenderer {
 
     public LoginRoute() {
         get("/login/template", (req, res) -> renderLoginTemplate(req));
-        post("/login/data", (req, res) -> parseLoginData(req)); }
+        post("/login/data", (req, res) -> parseLoginData(req));
+        post("login/logout", (req, res) -> logout());
+    }
 
     private String renderLoginTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
@@ -60,6 +62,14 @@ public class LoginRoute extends TemplateRenderer {
             sendTo = renderTemplate("velocity/login.vm", model);
         }
 
+        return sendTo;
+    }
+
+    private String logout()
+    {
+        Map<String, Object> model = new HashMap<>();
+        Account.setToNull();
+        sendTo = renderTemplate("velocity/home.vm", model);
         return sendTo;
     }
 

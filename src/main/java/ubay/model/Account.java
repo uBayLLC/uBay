@@ -30,6 +30,11 @@ public class Account {
         card = -1;
         id = -1; }
 
+        public static void setToNull()
+        {
+            loggedInUser=null;
+        }
+
 }
 
 
