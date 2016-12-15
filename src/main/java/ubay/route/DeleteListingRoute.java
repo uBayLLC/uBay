@@ -12,7 +12,7 @@ public class DeleteListingRoute extends TemplateRenderer {
 
     public DeleteListingRoute() {
         get("/item/delete-template", (req, res) -> renderDeleteListingTemplate(req));
-        post("/item/data", (req, res) -> parsecreateItemListing(req));
+//        post("/item/data", (req, res) -> parsecreateItemListing(req));
     }
 
     private String renderDeleteListingTemplate(Request req) {
