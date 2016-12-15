@@ -19,7 +19,7 @@ public class LoginRoute extends TemplateRenderer {
 
     public LoginRoute() {
         get("/login/template", (req, res) -> renderLoginTemplate(req));
-        post("/login/data", (req, res) -> parseLoginData(req));}
+        post("/login/data", (req, res) -> parseLoginData(req)); }
 
     private String renderLoginTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();

@@ -1,14 +1,18 @@
+<form ic-post-to="/item/data">
+
 <row>
     <div class="col-xs-12">
         <h1>$item.getName()</h1>
     </div>
 </row>
-<row>
 
+<row>
     <div class="col-md-6 item-img">
         <img class="img-responsive" src="$item.getPhotoUrl()">
     </div>
+</row>
 
+<row>
     <div class="col-md-6">
         <label>Description:</label>
         <p>$item.getDescription()</p>
@@ -39,4 +43,14 @@
         <p>$$bid.getAmount()</p>
     </div>
 
+    <div class="form-group">
+        <label for="newbid">Bid:</label>
+        <input type="number" name="newbid" class="form-control" id="newbid" value=$bid.getAmount()>
+    </div>
+
+    <font color="red"> <b> <p>$error</p> </b> </font>
+
+    <button class="btn btn-default">Place Bid</button>
 </row>
+
+</form>

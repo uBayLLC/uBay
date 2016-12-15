@@ -14,20 +14,51 @@ import ubay.model.Item;
 import ubay.model.Auction;
 import ubay.model.Account;
 
+import static spark.Spark.post;
 import static ubay.database.DatabaseConnection.con;
 
 public class ItemRoute extends TemplateRenderer {
 
     public ItemRoute() {
-        get("/item/template/:id", (req, res) -> renderItemTemplate(req)); }
+        get("/item/template/:id", (req, res) -> renderItemTemplate(req));
+        post("/item/data", (req, res) -> parseBid(req)); }
 
     private String renderItemTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
+        model.put("error", "");
         model.put("item", getItem(req));
         model.put("bid", getBid(req));
         model.put("auction", getAuction(req));
         return renderTemplate("velocity/item.vm", model);
     }
+
+    private String parseBid(Request req) {
+        Map<String, Object> model = new HashMap<>();
+        Bid bid = null;
+        int newBid = Integer.parseInt(req.queryParams("newbid"));
+
+        try {PreparedStatement getBidFromDB = con.prepareStatement("SELECT bid_amount FROM bid JOIN auction ON bid.bid_id = auction.bid_id");
+            ResultSet bidsFromDB = getBidFromDB.executeQuery();
+
+            while (bidsFromDB.next()) {
+
+                if (newBid <= bidsFromDB.getInt("bid_amount")) {
+                    throw new IllegalArgumentException(); }
+
+                bid = new Bid(
+                        Account.getLoggedInUser(),
+                        newBid); }
+        }
+
+        catch(IllegalArgumentException iae) {
+            iae.printStackTrace();
+            model.put("error", "Bid must be higher then the current highest bid."); }
+
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+            model.put("error", "An error occured please try again."); }
+
+        return renderTemplate("velocity/item.vm", model); }
 
     private Bid getBid(Request req) {
         PreparedStatement preparedStatement = null;
@@ -35,7 +66,7 @@ public class ItemRoute extends TemplateRenderer {
         Bid bid = null;
 
         try {
-            preparedStatement = con.prepareStatement("SELECT bid_amount FROM bid WHERE bid.bid_id = " + req.params(":id"));
+            preparedStatement = con.prepareStatement("SELECT bid_amount FROM bid JOIN auction ON bid.bid_id = auction.bid_id WHERE auction.item_id = " + req.params(":id"));
             resultSet = preparedStatement.executeQuery();
 
             while(resultSet.next()){
