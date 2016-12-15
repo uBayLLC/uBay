@@ -36,9 +36,9 @@ public class CreateItemListingRoute extends TemplateRenderer {
         String itemName = req.queryParams("name");
         String description = req.queryParams("description");
         String photolink = req.queryParams("photolink");
-        String seller_id = req.queryParams("seller_id");
-        String price = req.queryParams("starting_price");
+        String bid = req.queryParams("starting_price");
         String end_datetime = req.queryParams("end_datetime");
+        String seller_id = req.queryParams("seller_id");
         String bid_id = req.queryParams("bid_id");
        /* String soulRadio = req.queryParams("souls");
         String peopleRadio = req.queryParams("people");
@@ -92,7 +92,7 @@ public class CreateItemListingRoute extends TemplateRenderer {
             //Create Auction
             PreparedStatement preparedStatementListing = con.prepareStatement("INSERT  INTO auction (item_id, starting_price, bid_id, end_datetime) VALUES (?,?,?,?)");
             preparedStatementListing.setInt(1, itemID);
-            preparedStatementListing.setInt(2, Integer.parseInt(price));
+            preparedStatementListing.setInt(2, Integer.parseInt(bid));
             preparedStatementListing.setInt(3, 1);
             preparedStatementListing.setString(4, end_datetime);
             int result = preparedStatementListing.executeUpdate();
