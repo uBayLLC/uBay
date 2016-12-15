@@ -19,6 +19,7 @@ public class DeleteListingRoute extends TemplateRenderer {
         post("/item/data", (req, res) -> parseDeleteListing(req));
     }
 
+
     private String renderDeleteListingTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
         return renderTemplate("velocity/deleteListing.vm", model);
