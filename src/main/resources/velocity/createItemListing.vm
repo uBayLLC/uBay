@@ -23,8 +23,13 @@
     </div>
 
     <div class="form-group">
-        <label for="ExampleEndTime">yyyy-MM-dd HH:mm:ss*</label>
-        <input type="text" name="end_datetime" class="form-control" id="ExampleEndTime" placeholder="endtime">
+        <label for="EndDate">Enter Auction End Date* (mm/dd/yyyy)</label>
+        <input type="text" name="end_date" class="form-control" id="ExampleEndTime" placeholder="Auction End Date">
+    </div>
+
+    <div class="form-group">
+        <label for="EndDate">Enter Auction End Time* (hh:mm:ss)</label>
+        <input type="text" name="end_time" class="form-control" id="ExampleEndTime" placeholder="Auction End Time">
     </div>
 
     <font color="red"> <b> <p>$error</p> </b> </font>

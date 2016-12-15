@@ -6,5 +6,3 @@
     <button class="btn btn-default" ic-target="#home" ic-get-from="/item/delete-template"">Delete Listing</button>
 
 </form>
-
-<div class="container" id="home"></div>

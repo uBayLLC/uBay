@@ -8,10 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.*;
+import java.util.*;
+import java.text.*;
 
+import static javax.swing.text.html.HTML.Tag.I;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static ubay.database.DatabaseConnection.con;
@@ -31,16 +32,13 @@ public class CreateItemListingRoute extends TemplateRenderer {
 
     private String parsecreateItemListing(Request req) {
         Map<String, Object> model = new HashMap<>();
-        //Date currentDate = new Date();
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String itemName = req.queryParams("name");
         String description = req.queryParams("description");
         String photolink = req.queryParams("photolink");
         String startingBid = req.queryParams("startingbid");
-        String end_datetime = req.queryParams("end_datetime");
-        //String seller_id = req.queryParams("seller_id");
-        //String bid_id = req.queryParams("bid_id");
+        String endDate = req.queryParams("end_date");
+        String endTime = req.queryParams("end_time");
 
         //Create Item Try Catch
         try {
@@ -57,6 +55,7 @@ public class CreateItemListingRoute extends TemplateRenderer {
             preparedStatementItem.setInt(5, 1);
             int result = preparedStatementItem.executeUpdate();
             if (result != 0) {
+                System.out.println("Created Item");
                 sendTo = renderTemplate("velocity/myAccount.vm", model); }
 
         } catch (IOException ioe) {
@@ -67,15 +66,23 @@ public class CreateItemListingRoute extends TemplateRenderer {
         catch (SQLException e) {
             e.printStackTrace();
             model.put("error", "An error occured please try again.");
-            System.out.println("Item cannot be created at this time.  ¯\\_(ツ)_/¯");
+            System.out.println("Couldn't Create Item, SQL");
             sendTo = renderTemplate("velocity/createItemListing.vm", model); }
 
 
         //Create Auction Try Catch
         try {
 
-            if (startingBid.equalsIgnoreCase("") || end_datetime.equalsIgnoreCase("")) {
+            if (startingBid.equalsIgnoreCase("") || endDate.equalsIgnoreCase("") || endTime.equalsIgnoreCase("")) {
                 throw new IOException(); }
+
+            String [] dateSplit = endDate.split("/");
+
+            String month = dateSplit[0];
+            String day = dateSplit[1];
+            String year = dateSplit[2];
+
+            String formattedDateTime = (year+"-"+month+"-"+day+" "+endTime);
 
             int itemID = 0;
             PreparedStatement preparedStatementFindItem = con.prepareStatement("SELECT item_id FROM item WHERE name = ? ");
@@ -89,59 +96,42 @@ public class CreateItemListingRoute extends TemplateRenderer {
             preparedStatementListing.setInt(1, itemID);
             preparedStatementListing.setInt(2, Integer.parseInt(startingBid));
             preparedStatementListing.setInt(3, 1);
-            preparedStatementListing.setString(4, end_datetime);
+            preparedStatementListing.setString(4, formattedDateTime);
             int result = preparedStatementListing.executeUpdate();
             if (result != 0) {
+                System.out.println("Created Auction");
                 sendTo = renderTemplate("velocity/myAccount.vm", model);} }
 
         catch (IOException ioe1) {
             ioe1.printStackTrace();
+            deleteItem(model);
             model.put("error", "All items with * are required.");
+            sendTo = renderTemplate("velocity/createItemListing.vm", model); }
+
+        catch (InputMismatchException ime) {
+            ime.printStackTrace();
+            deleteItem(model);
+            model.put("error", "Date and/or time entered are in the past.");
             sendTo = renderTemplate("velocity/createItemListing.vm", model); }
 
         catch (SQLException e1) {
             e1.printStackTrace();
+            deleteItem(model);
             model.put("error", "An error occured please try again.");
-            System.out.println("Listing cannot be created at this time.  ¯\\_(ツ)_/¯");
+            System.out.println("Couldn't Create Auction, SQL");
             sendTo = renderTemplate("velocity/createItemListing.vm", model); }
 
         return sendTo; }
 
-
+    private void deleteItem(Map<String, Object> model) {
+        try {
+            PreparedStatement in = con.prepareStatement("SELECT max(item_id) FROM item");
+            ResultSet rs = in.executeQuery();
+            rs.next();
+            PreparedStatement error = con.prepareStatement("DELETE FROM item WHERE item_id = "+Integer.parseInt(rs.getString(1)));
+            error.executeUpdate();
+        } catch (SQLException sql2) {
+            sql2.printStackTrace();
+            model.put("error", "error");
+            sendTo = renderTemplate("velocity/createItemListing.vm", model); } }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       /* String soulRadio = req.queryParams("souls");
-        String peopleRadio = req.queryParams("people");
-        String techRadio = req.queryParams("tech");
-        String toyRadio = req.queryParams("toys");
-        String servRadio = req.queryParams("services");
-        String tag_id = " "; */
-
-          /*  if (soulRadio.equals("on")) {
-                tag_id = "1";
-            } else if (peopleRadio.equals("on")) {
-                tag_id = "2";
-            } else if (techRadio.equals("on")) {
-                tag_id = "3";
-            } else if (toyRadio.equals("on")) {
-                tag_id = "4";
-            } else if (servRadio.equals("on")) {
-                tag_id = "5";
-            } else {
-                tag_id = "0";
-            } */
-
