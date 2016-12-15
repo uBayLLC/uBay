@@ -12,18 +12,31 @@
         <input type="text" name="photolink" class="form-control" id="ExamplePhotoLink" placeholder="Link to photo">
     </div>
     <div class="form-group">
-        <label for="ExampleTag">Tag</label>
-        <input type="text" name="tag" class="form-control" id="ExampleTag" placeholder="Tag">
-    </div>
-    <div class="form-group">
         <label for="ExampleStart">Starting Bid</label>
-        <input type="text" name="bid" class="form-control" id="ExampleTag" placeholder="Starting Bid">
+        <input type="text" name="bid" class="form-control" id="ExampleStart" placeholder="Starting Bid">
     </div>
     <div class="form-group">
         <label for="ExampleEndTime">yyyy-MM-dd HH:mm:ss</label>
         <input type="text" name="end_datetime" class="form-control" id="ExampleEndTime" placeholder="endtime">
     </div>
-
-
+        <p>Please select a tag  </p>
+        <form>
+            <div class="radio">
+                <label><input type="radio" name="souls">Souls</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="people">People</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="tech">Technology</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="toys">Toys</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="services">Services</label>
+            </div>
+        </form>
+    </div>
     <button class="btn btn-default">Create Item</button>
 </form>

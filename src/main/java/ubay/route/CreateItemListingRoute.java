@@ -41,7 +41,12 @@ public class CreateItemListingRoute extends TemplateRenderer {
         String price = req.queryParams("starting_price");
         String end_datetime = req.queryParams("end_datetime");
         String bid_id = req.queryParams("bid_id");
-        String item_id = req.queryParams("item_id");
+        String soulRadio = req.queryParams("souls");
+        String peopleRadio = req.queryParams("people");
+        String techRadio = req.queryParams("tech");
+        String toyRadio = req.queryParams("toys");
+        String servRadio = req.queryParams("services");
+
 
         try {
             //Create item
@@ -70,6 +75,19 @@ public class CreateItemListingRoute extends TemplateRenderer {
                 itemID = resultSet.getInt("item_id");
             }
 
+            if (soulRadio.equals("on")) {
+                tag_id = "1";
+            } else if (peopleRadio.equals("on")) {
+                tag_id = "2";
+            } else if (techRadio.equals("on")) {
+                tag_id = "3";
+            } else if (toyRadio.equals("on")) {
+                tag_id = "4";
+            } else if (servRadio.equals("on")) {
+                tag_id = "5";
+            } else {
+                tag_id = null;
+            }
             //Create Auction
             PreparedStatement preparedStatementListing = con.prepareStatement("INSERT  INTO auction (item_id, starting_price, bid_id, end_datetime) VALUES (?,?,?,?)");
             preparedStatementListing.setInt(1, itemID);
