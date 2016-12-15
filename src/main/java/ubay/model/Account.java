@@ -19,8 +19,7 @@ public class Account {
     public static Account getLoggedInUser() {
         if (loggedInUser == null) {
             loggedInUser = new Account(); }
-        return loggedInUser;
-    }
+        return loggedInUser; }
 
     private Account() {
         firstname = null;
@@ -29,7 +28,8 @@ public class Account {
         password = null;
         address = null;
         card = -1;
-        id = -1;}
+        id = -1; }
+
 }
 
 

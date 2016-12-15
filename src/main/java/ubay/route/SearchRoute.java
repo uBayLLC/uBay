@@ -1,11 +1,15 @@
 package ubay.route;
-import spark.Request;
 
+import spark.Request;
+import ubay.model.Item;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.sql.*;
 
 import static spark.Spark.post;
 import static ubay.database.DatabaseConnection.con;
@@ -13,41 +17,63 @@ import static ubay.route.TemplateRenderer.renderTemplate;
 
 public class SearchRoute {
 
-
     public SearchRoute()
     {
         post("/search/data", (req, res) -> parseSearchData(req));
     }
 
-    private String parseSearchData(Request req)
-    {
+    private String parseSearchData(Request req) {
+
         Map<String, Object> model = new HashMap<>();
-        System.out.println("Hello");
+        model.put("items", getItems(req));
+        return renderTemplate("velocity/home.vm", model);
 
-        String itemName = req.queryParams("");
-        System.out.println(itemName);
+    }
 
+    private List<Item> getItems(Request req){
+
+        String itemName = req.queryParams("search");
+        String filter = req.queryParams("filter");
+        PreparedStatement preparedStatement = null;
+        ResultSet result = null;
+        List<Item> items = new ArrayList<>();
         try {
-            System.out.println("This is my try clause");
-            Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery("Select * From Item Where name like '" + itemName + "'");
 
-            ResultSetMetaData column = result.getMetaData();
+            if (!itemName.equalsIgnoreCase("") && !filter.equalsIgnoreCase("")) {
+                preparedStatement = con.prepareStatement("SELECT item.item_id, item.name, item.description, item.photo, item.seller_id, item.tag_id FROM item JOIN tag ON tag.tag_id = item.tag_id WHERE tag.name LIKE '%" + filter + "%' AND WHERE item.name = '%" + itemName + "%'");
+                result = preparedStatement.executeQuery();
+            } else if(!itemName.equalsIgnoreCase("")){
+                preparedStatement = con.prepareStatement("SELECT * FROM item WHERE name LIKE '%" + itemName +"%'");
+                result = preparedStatement.executeQuery();
+            } else if(!filter.equalsIgnoreCase("")) {
+                preparedStatement = con.prepareStatement("SELECT item.item_id, item.name, item.description, item.photo, item.seller_id, item.tag_id FROM item JOIN tag ON tag.tag_id = item.tag_id WHERE tag.name LIKE '%" + filter + "%'");
+                result = preparedStatement.executeQuery();
+            }
 
-            int columnsNumber = column.getColumnCount();
-            while (result.next()) {
-               for (int i = 1; i <= columnsNumber; i++) {
-                 if (i > 1) System.out.print(",  ");
-               String columnValue = result.getString(i);
-           System.out.print(columnValue + " " + column.getColumnName(i));
-           }
-            System.out.println("");
+            while(result.next()) {
+                Item item = new Item(
+                        result.getInt("item_id"),
+                        result.getString("name"),
+                        result.getString("description"),
+                        result.getString("photo"),
+                        result.getInt("seller_id"),
+                        result.getInt("tag_id")
+                );
+                items.add(item);
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (result != null) {
+                try { result.close(); }
+                catch (SQLException e) { e.printStackTrace(); }
+            }
+            if (preparedStatement != null) {
+                try { preparedStatement.close(); }
+                catch (SQLException e) { e.printStackTrace(); }
             }
         }
-     catch (SQLException exc) {
-        exc.printStackTrace();
-        System.out.println("Invalid Search");
-    }
-    return renderTemplate("velocity/home.vm", model);
+
+        return items;
     }
 }

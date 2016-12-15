@@ -1,13 +1,56 @@
-<row>
-    <div class="col-xs-12">
-        <h1>$item.getName()</h1>
-    </div>
-</row>
-<row>
-    <div class="col-md-6 item-img">
-        <img class="img-responsive" src="$item.getPhotoUrl()">
-    </div>
-    <div class="col-md-6">
-        <p>$item.getDescription()</p>
-    </div>
-</row>
+<form ic-post-to="/item/bid">
+
+    <row>
+        <div class="col-xs-12">
+            <h1>$item.getName()</h1>
+        </div>
+    </row>
+
+    <row>
+        <div class="col-md-6 item-img">
+            <img class="img-responsive" src="$item.getPhotoUrl()">
+        </div>
+    </row>
+
+    <row>
+        <div class="col-md-6">
+            <label>Description:</label>
+            <p>$item.getDescription()</p>
+        </div>
+
+        <div class="col-md-6">
+            <label>End Date:</label>
+            <p>$auction.getEndDate()</p>
+        </div>
+
+        <div class="col-md-6">
+            <label>End Time:</label>
+            <p>$auction.getEndTime()</p>
+        </div>
+
+##        <div class="col-md-6">
+##            <label>Instant Buy Price:</label>
+##            <p>$auction.getBuyOutPrice()</p>
+##        </div>
+
+        <div class="col-md-6">
+            <label>Starting Price:</label>
+            <p>$auction.getStartingPrice()</p>
+        </div>
+
+        <div class="col-md-6">
+            <label>Current Bid:</label>
+            <p>$bid.getAmount()</p>
+        </div>
+
+        <div class="form-group">
+            <label for="newbid">Bid:</label>
+            <input type="number" min=$bid.getAmount() onkeydown="return false" maxlength="10" name="newbid" class="form-control" id="newbid" value=$bid.getAmount()>
+        </div>
+
+        <font color="red"> <b> <p>$error</p> </b> </font>
+
+        <button class="btn btn-default">Place Bid</button>
+    </row>
+
+</form>

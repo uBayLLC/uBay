@@ -19,11 +19,13 @@ public class LoginRoute extends TemplateRenderer {
 
     public LoginRoute() {
         get("/login/template", (req, res) -> renderLoginTemplate(req));
-        post("/login/data", (req, res) -> parseLoginData(req));}
+        post("/login/data", (req, res) -> parseLoginData(req)); }
 
     private String renderLoginTemplate(Request req) {
         Map<String, Object> model = new HashMap<>();
         model.put("var", "");
+        model.put("foo", "hidden");
+        //System.out.println(req.queryParams("test"));
         return renderTemplate("velocity/login.vm", model);
     }
 
@@ -47,7 +49,7 @@ public class LoginRoute extends TemplateRenderer {
             Account.getLoggedInUser().setPassword(rs.getString("password"));
             Account.getLoggedInUser().setAddress(rs.getString("address"));
             Account.getLoggedInUser().setCard(rs.getInt("card"));
-            Account.getLoggedInUser().setId(rs.getInt("id"));
+            Account.getLoggedInUser().setId(rs.getInt("account_id"));
 
             sendTo = renderTemplate("velocity/home.vm", model); }
 

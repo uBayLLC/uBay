@@ -7,7 +7,7 @@ import ubay.model.Account;
 @RequiredArgsConstructor
 public class Bid {
 
-    @NonNull private Account account;
+    @NonNull private Account buyersAccount;
     @NonNull private int amount;
 
 }
