@@ -16,7 +16,12 @@
 
     <div class="col-md-6">
         <label>End Date:</label>
-        <p>$auction.getEndDateTime()</p>
+        <p>$auction.getEndDate()</p>
+    </div>
+
+    <div class="col-md-6">
+        <label>End Time:</label>
+        <p>$auction.getEndTime()</p>
     </div>
 
     <div class="col-md-6">
@@ -30,7 +35,7 @@
     </div>
 
     <div class="col-md-6">
-        <label>Highest Bid:</label>
+        <label>Current Bid:</label>
         <p>$$bid.getAmount()</p>
     </div>
 
