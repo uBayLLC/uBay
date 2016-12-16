@@ -61,7 +61,7 @@ public class CreateAccountRoute extends TemplateRenderer {
             addAccountToDB.executeUpdate();
 
             //Get id of new account
-            PreparedStatement getIdFromDB = con.prepareStatement("SELECT id FROM account WHERE email='" +email+ "';");
+            PreparedStatement getIdFromDB = con.prepareStatement("SELECT account_id FROM account WHERE email='" +email+ "';");
             ResultSet rs = getIdFromDB.executeQuery();
             rs.next();
 
@@ -72,7 +72,7 @@ public class CreateAccountRoute extends TemplateRenderer {
             Account.getLoggedInUser().setPassword(password);
             Account.getLoggedInUser().setAddress(address);
             Account.getLoggedInUser().setCard(Integer.parseInt(cardNumber));
-            Account.getLoggedInUser().setId(rs.getInt("id"));
+            Account.getLoggedInUser().setId(rs.getInt("account_id"));
 
             sendTo = renderTemplate("velocity/home.vm", model); }
 
@@ -89,6 +89,7 @@ public class CreateAccountRoute extends TemplateRenderer {
         //Catches exception if something goes wrong while adding account to database
         catch (SQLException sqle) {
             model.put("var", "An error occured please try again.");
+            sqle.printStackTrace();
             sendTo = renderTemplate("velocity/createAccount.vm", model); }
 
         return sendTo; }

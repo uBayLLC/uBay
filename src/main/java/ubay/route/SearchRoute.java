@@ -40,7 +40,7 @@ public class SearchRoute {
         try {
 
             if (!itemName.equalsIgnoreCase("") && !filter.equalsIgnoreCase("")) {
-                preparedStatement = con.prepareStatement("SELECT item.item_id, item.name, item.description, item.photo, item.seller_id, item.tag_id FROM item JOIN tag ON tag.tag_id = item.tag_id WHERE tag.name LIKE '%" + filter + "%' AND WHERE item.name = '%" + itemName + "%'");
+                preparedStatement = con.prepareStatement("SELECT item.item_id, item.name, item.description, item.photo, item.seller_id, item.tag_id FROM item JOIN tag ON tag.tag_id = item.tag_id WHERE tag.name LIKE '" + filter + "%' AND WHERE item.name = '%" + itemName + "%'");
                 result = preparedStatement.executeQuery();
             } else if(!itemName.equalsIgnoreCase("")){
                 preparedStatement = con.prepareStatement("SELECT * FROM item WHERE name LIKE '%" + itemName +"%'");

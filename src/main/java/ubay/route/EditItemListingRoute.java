@@ -147,7 +147,7 @@ public class EditItemListingRoute extends TemplateRenderer {
             String endTime = req.queryParams("end_time");
 
             //Throws exception if any required fields are left blank
-            if (name.equalsIgnoreCase("") || description.equalsIgnoreCase("") || startingBid.equalsIgnoreCase("") || endDatetime.equalsIgnoreCase("") || endDate.equalsIgnoreCase("") || endTime.equalsIgnoreCase("")) {
+            if (name.equalsIgnoreCase("") || description.equalsIgnoreCase("") || startingBid.equalsIgnoreCase("") || endDatetime.equalsIgnoreCase("")) {
                 throw new IOException(); }
 
             //Update account info on database
