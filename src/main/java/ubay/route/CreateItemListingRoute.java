@@ -1,6 +1,7 @@
 package ubay.route;
 
 import spark.Request;
+import ubay.model.Account;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -51,7 +52,7 @@ public class CreateItemListingRoute extends TemplateRenderer {
             preparedStatementItem.setString(1, itemName);
             preparedStatementItem.setString(2, description);
             preparedStatementItem.setString(3, photolink);
-            preparedStatementItem.setInt(4, 1);
+            preparedStatementItem.setInt(4, Account.getLoggedInUser().getId());
             preparedStatementItem.setInt(5, 1);
             int result = preparedStatementItem.executeUpdate();
             if (result != 0) {

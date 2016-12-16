@@ -40,7 +40,7 @@ public class EditItemListingRoute extends TemplateRenderer {
         List<Item> items = new ArrayList<>();
 
         try {
-            preparedStatement = con.prepareStatement("SELECT item.item_id, item.name, item.description, item.photo, item.seller_id, item.tag_id FROM item JOIN account ON item.seller_id = account.account_id WHERE account_id = ?");
+            preparedStatement = con.prepareStatement("SELECT * FROM item JOIN account ON item.seller_id = account.account_id WHERE account_id = ?");
             preparedStatement.setInt(1, Account.getLoggedInUser().getId());
             resultSet = preparedStatement.executeQuery();
 
