@@ -28,7 +28,6 @@ public class Ubay {
         new EditItemListingRoute();
         new MyAccountRoute();
         new EditAccountRoute();
-        new AuctionRoute();
         new SearchRoute();
         new DeleteListingRoute();
     }
